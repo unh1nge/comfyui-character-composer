@@ -52,7 +52,8 @@ This will **NOT appear in the UI**, because:
 ## 🔗 Recommended Stack
 
 - Model: Qwen-Image-Edit-Rapid-AIO  
-- Workflow: Adapted from Phr00t’s pipeline  
+- Workflow: Adapted from Phr00t’s pipeline and included it as
+- comfyui-character-composer Qwen workflow.json  
 - Node: ComfyUI Character Composer  
 
 This setup combines:
@@ -65,6 +66,7 @@ This setup combines:
 ## Workflow Overview
 
 <img src="preview/workflow example.png" width="100%" />
+comfyui-character-composer Qwen workflow.json
 
 ---
 
