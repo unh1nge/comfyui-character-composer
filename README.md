@@ -1,53 +1,175 @@
-# comfyui-character-composer
-<img src="preview/workflow example.png" alt="ComfyUI workflow example" width="100%" />
+---
+license: apache-2.0
+task_categories:
+- image-to-image
+language:
+- en
+tags:
+- comfyui
+- qwen
+- character-generation
+- custom-node
+- workflow
+- image-generation
+pretty_name: ComfyUI Character Composer
+size_categories:
+- n<1K
+---
+# ComfyUI Character Composer
 
-A custom ComfyUI node and Qwen Workflow for generating polished character prompts using JSON-driven, configurable prompt traits.
+Structured, JSON-driven character prompt system for ComfyUI.
 
-The node is designed for easy character generation, with options for preserving existing prompts, randomizing traits, and excluding unwanted categories.
+Designed for **consistent, controllable character generation** using Qwen-based workflows — replacing random prompt chaos with deterministic composition.
 
-<img src="preview/ComfyUI_01625_.png" alt="Random Prompt Generator preview 2" width="100%" />
+Find the spiced up version on Huggingface 
+https://huggingface.co/datasets/unh1nge/comfyui-character-composer
 
+<img src="preview/ComfyUI_01625_.png" width="100%" />
+---
+
+## 🔗 Recommended Stack
+
+- Model: Qwen-Image-Edit-Rapid-AIO  
+- Workflow: Adapted from Phr00t’s pipeline  
+- Node: ComfyUI Character Composer  
+
+This setup combines:
+- Qwen spatial reasoning
+- structured prompt composition
+- controlled character generation
+
+---
+
+## Workflow Overview
+
+<img src="preview/workflow example.png" width="100%" />
+
+---
+
+## Why this matters
+
+Most character generation setups:
+- rely on random prompts
+- produce inconsistent characters
+- are difficult to reproduce
+
+This node provides:
+- structured trait composition
+- deterministic outputs (seed-based)
+- precise control over character attributes
+
+---
 
 ## Features
 
-- JSON-driven prompt tag selection
-- `preserve`, `random`, and `none` options for each trait
-- Supports detailed trait categories like hair, body, outfit, pose, setting, and atmosphere
-- Built-in prompt sanitization and exclusion support
-- Compatible with ComfyUI custom node workflow
+- JSON-driven prompt system (tags.json)
+- preserve / random / none logic per trait
+- Structured categories (face, body, outfit, pose, scene, etc.)
+- Preset system for style injection
+- Wildcard support ({tag} replacement)
+- Built-in prompt sanitization
+- Optional auto-fill (randomize_unspecified)
+- Debug output for full traceability
 
-<img src="preview/ComfyUI_01543_.png" alt="Random Prompt Generator preview 1" width="100%" />
+
+<img src="preview/ComfyUI_01543_.png" width="100%" />
+
+---
+
+## Example
+
+Input:
+    {hair_color} {hair_style} woman in {setting}
+
+Output:
+    blonde wavy hair woman in neon-lit alley, cinematic lighting, high detail, 8k
+
+---
 
 ## Installation
 
-1. Copy the `comfyui-character-composer` folder into your ComfyUI `custom_nodes` directory.
-2. Restart ComfyUI so it detects the new node.
-3. Open the node graph and add the `ComfyUICharacterComposer` node. It is located in "Prompts".
+1. Clone into your ComfyUI custom_nodes directory:
 
-<img src="preview/ComfyUI_01645_.png" alt="Random Prompt Generator preview 3" width="100%" />
+    cd ComfyUI/custom_nodes  
+    git clone https://github.com/unh1nge/comfyui-character-composer
 
+2. Restart ComfyUI
+
+3. Add node:
+    RandomPromptGenerator  
+    (Category: Prompts)
+
+<img src="preview/ComfyUI_01645_.png" width="100%" />
+
+---
 
 ## Usage
 
-1. Provide an input prompt to guide the generator.
-2. Choose from the dropdowns to preserve, randomize, or remove values.
-3. Enable `randomize_unspecified` to fill any unspecified trait boxes automatically.
-4. Optionally use `extra_modifiers` to append additional style and quality tags.
+1. Provide an optional base prompt  
+2. Configure traits:
+    - preserve → keep detected values  
+    - random → randomize  
+    - none → remove  
+3. Enable randomize_unspecified for auto-fill  
+4. Use {tags} for wildcard injection  
+5. Adjust extra_modifiers for styling  
 
-<img src="preview/ComfyUI_01877_.png" alt="Random Prompt Generator preview 4" width="100%" />
+<img src="preview/ComfyUI_01877_.png" width="100%" />
+
+---
+
+## Custom Workflow
+
+This repository includes a workflow adapted from Phr00t’s Qwen pipeline, modified to:
+
+- integrate structured prompt composition  
+- improve character consistency  
+- reduce prompt noise  
+
+---
 
 ## Customization
 
-- Edit `tags.json` to modify available trait options.
-- Update `DEFAULT_MODIFIERS` in `comfyui_character_composer.py` to change the default prompt modifiers.
-- Add or adjust presets in `PRESET_TRAITS` for prebuilt theme combinations.
+- tags.json → define traits  
+- DEFAULT_MODIFIERS → global style baseline  
+- PRESET_TRAITS → theme presets  
+- UI_LAYOUT → UI structure  
 
-## Notes
+---
 
-- The node returns the generated prompt as the `positive_prompt` output.
-- It also returns a `debug` string showing selected trait values.
-- Image metadata is not automatically populated; save prompts separately if needed.
+## What this is NOT
+
+- Not a LoRA trainer  
+- Not a ControlNet pipeline  
+- Not a full workflow system  
+
+This is a **prompt composition layer**.
+
+---
+
+## Outputs
+
+- positive_prompt → final prompt  
+- negative_prompt → filtered terms  
+- debug → selected traits  
+
+---
+
+## Acknowledgements
+
+Built on top of:
+
+Phr00t – Qwen Image Edit ecosystem  
+https://huggingface.co/Phr00t/Qwen-Image-Edit-Rapid-AIO  
+
+---
+
+## Keywords
+
+ComfyUI, prompt engineering, structured prompts, character generation, Qwen workflow
+
+---
 
 ## License
 
-Use this node freely in your ComfyUI projects. Modify the code and tags to fit your character generation needs.
+Free to use and modify.
