@@ -1,3 +1,4 @@
+import glob
 import json
 import os
 import random
@@ -154,17 +155,45 @@ def _search_keyword(prompt: str, choices: list[str]) -> str | None:
 def _is_none_selection(value) -> bool:
     return value is None or str(value).strip().lower() in ("none", "")
 
+DEFAULT_TAG_FILE = "tags.json"
 
-def _get_json_tags() -> dict:
-    """Reads the tags.json file. Returns empty lists for any missing MASTER_KEYS."""
-    tags_path = os.path.join(os.path.dirname(__file__), "tags.json")
+TAG_CACHE = {
+    "path": None,
+    "mtime": None,
+    "data": None,
+}
+
+
+def _resolve_tag_file_path(tag_file: str) -> str:
+    if not tag_file:
+        return os.path.join(os.path.dirname(__file__), DEFAULT_TAG_FILE)
+    if os.path.isabs(tag_file):
+        return tag_file
+    return os.path.join(os.path.dirname(__file__), tag_file)
+
+
+def _find_tags_json_files() -> list[str]:
+    node_dir = os.path.dirname(__file__)
+    json_files = glob.glob(os.path.join(node_dir, "*.json"))
+    tag_files = [os.path.basename(f) for f in json_files if "tag" in os.path.basename(f).lower()]
+    return sorted(tag_files)
+
+
+def _get_json_tags(tag_file: str = DEFAULT_TAG_FILE) -> dict:
+    """Reads the tags JSON file. Returns empty lists for any missing MASTER_KEYS."""
+    tags_path = _resolve_tag_file_path(tag_file)
     loaded_tags = {}
     mtime = None
+
+    if not os.path.exists(tags_path) and tag_file != DEFAULT_TAG_FILE:
+        fallback_path = os.path.join(os.path.dirname(__file__), DEFAULT_TAG_FILE)
+        print(f"ComfyUICharacterComposer Warning: Tags file '{tag_file}' not found, falling back to '{DEFAULT_TAG_FILE}'")
+        tags_path = fallback_path
 
     if os.path.exists(tags_path):
         try:
             mtime = os.path.getmtime(tags_path)
-            if TAG_CACHE["mtime"] == mtime and TAG_CACHE["data"] is not None:
+            if TAG_CACHE["path"] == tags_path and TAG_CACHE["mtime"] == mtime and TAG_CACHE["data"] is not None:
                 return TAG_CACHE["data"]
             with open(tags_path, "r", encoding="utf-8") as f:
                 loaded_tags = json.load(f)
@@ -183,6 +212,7 @@ def _get_json_tags() -> dict:
             normalized = []
         result[key] = normalized or ["missing_key_in_json"]
 
+    TAG_CACHE["path"] = tags_path
     TAG_CACHE["mtime"] = mtime
     TAG_CACHE["data"] = result
     return result
@@ -201,7 +231,9 @@ class ComfyUICharacterComposer:
             if include_none: base.append("none")
             return ("COMBO", {"default": "preserve", "options": base + options})
 
-        tag_data = _get_json_tags()
+        tags_files = _find_tags_json_files()
+        tag_file_default = DEFAULT_TAG_FILE if DEFAULT_TAG_FILE in tags_files else (tags_files[0] if tags_files else DEFAULT_TAG_FILE)
+        tag_data = _get_json_tags(tag_file_default)
         inputs = {
             "required": {
                 "input_prompt": ("STRING", {"default": "", "multiline": True}),
@@ -210,6 +242,7 @@ class ComfyUICharacterComposer:
                 "randomize_unspecified": ("BOOLEAN", {"default": False}),
                 "reset_to_preserve": ("BOOLEAN", {"default": False, "tooltip": "Force all non-preset trait controls back to preserve mode for this generation."}),
                 "bypass_generator": ("BOOLEAN", {"default": False}),
+                "tag_file": ("COMBO", {"default": tag_file_default, "options": tags_files or [DEFAULT_TAG_FILE], "tooltip": "Select which tags JSON file to load."}),
             },
             "optional": { "image1": ("IMAGE", {"image_upload": True}) }
         }
@@ -222,12 +255,12 @@ class ComfyUICharacterComposer:
             
         return inputs
 
-    def generate(self, input_prompt, seed, extra_modifiers, randomize_unspecified, bypass_generator, image1=None, **kwargs):
+    def generate(self, input_prompt, seed, extra_modifiers, randomize_unspecified, bypass_generator, tag_file=DEFAULT_TAG_FILE, image1=None, **kwargs):
         if bypass_generator:
             return (input_prompt.strip(), NEGATIVE_PROMPT_TERMS, "Bypass Active", image1)
 
         rng = random.Random(seed)
-        tag_data = _get_json_tags()
+        tag_data = _get_json_tags(tag_file)
         prompt_clean = _sanitize_prompt(input_prompt)
         prompt_clean = _remove_futanari_terms(prompt_clean)
         
