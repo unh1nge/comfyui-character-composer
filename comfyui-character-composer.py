@@ -2,7 +2,7 @@ import json
 import os
 import random
 import re
-
+ 
 # Modifiers and Negative terms stay here as they are functional "constants" for the engine
 DEFAULT_MODIFIERS = [
     "gravure", "photorealistic", "soft lighting", "high detail", "8k",
