@@ -124,7 +124,10 @@ Output:
     (Category: Prompts)
 
 Or use the included workflow:
-    comfyui-character-composer Qwen workflow.json
+comfyui-character-composer Qwen workflow.json
+
+and place the unzipped folder into your ComfyUI custom_nodes directory
+    
 
 <img src="preview/ComfyUI_01645_.png" width="100%" />
 
