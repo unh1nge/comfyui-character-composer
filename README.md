@@ -99,6 +99,9 @@ Output:
     RandomPromptGenerator  
     (Category: Prompts)
 
+   Or just use the custom workflow "
+comfyui-character-composer Qwen workflow.json"  provided.
+
 <img src="preview/ComfyUI_01645_.png" width="100%" />
 
 ---
