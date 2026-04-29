@@ -2,7 +2,7 @@ import json
 import os
 import random
 import re
- 
+
 # Modifiers and Negative terms stay here as they are functional "constants" for the engine
 DEFAULT_MODIFIERS = [
     "gravure", "photorealistic", "soft lighting", "high detail", "8k",
@@ -169,7 +169,7 @@ def _get_json_tags() -> dict:
             with open(tags_path, "r", encoding="utf-8") as f:
                 loaded_tags = json.load(f)
         except Exception as e:
-            print(f"RandomPromptGenerator Error: Could not read tags.json - {e}")
+            print(f"ComfyUICharacterComposer Error: Could not read tags.json - {e}")
 
     # Ensure every key in our UI exists, even if the JSON forgot it
     result = {}
@@ -187,7 +187,7 @@ def _get_json_tags() -> dict:
     TAG_CACHE["data"] = result
     return result
 
-class RandomPromptGenerator:
+class ComfyUICharacterComposer:
     DESCRIPTION = "Strict JSON-driven prompt generator for cute & tropical gravure."
     CATEGORY = "Prompt"
     RETURN_TYPES = ("STRING", "STRING", "STRING", "IMAGE")
@@ -326,5 +326,5 @@ class RandomPromptGenerator:
         return (final_prompt, NEGATIVE_PROMPT_TERMS, debug_str, image1)
 
 NODE_CLASS_MAPPINGS = {
-    "RandomPromptGenerator": RandomPromptGenerator,
+    "ComfyUICharacterComposer": ComfyUICharacterComposer,
 }
