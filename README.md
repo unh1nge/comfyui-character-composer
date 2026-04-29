@@ -15,16 +15,38 @@ pretty_name: ComfyUI Character Composer
 size_categories:
 - n<1K
 ---
+
 # ComfyUI Character Composer
 
 Structured, JSON-driven character prompt system for ComfyUI.
 
 Designed for **consistent, controllable character generation** using Qwen-based workflows — replacing random prompt chaos with deterministic composition.
 
-Find the spiced up version on Huggingface 
-https://huggingface.co/datasets/unh1nge/comfyui-character-composer
-
 <img src="preview/ComfyUI_01625_.png" width="100%" />
+
+---
+
+## 🆕 Update v1.1 – Dynamic Tag Switching
+
+Version 1.1 introduces a **dynamic tag system**:
+
+- Import custom `tags.json` files
+- Switch between different tag sets (e.g. SFW / NSFW)
+- Adapt the generator to different use cases without modifying code
+
+### Important limitation
+
+Custom tags must follow existing UI structure.
+
+Example:
+
+"Vehicles": ["car", "bike", "jet"]
+
+
+This will **NOT appear in the UI**, because:
+- UI categories are defined in `UI_LAYOUT`
+- New categories are ignored unless implemented in code
+
 ---
 
 ## 🔗 Recommended Stack
@@ -62,15 +84,15 @@ This node provides:
 
 ## Features
 
-- JSON-driven prompt system (tags.json)
+- JSON-driven prompt system (`tags.json`)
+- Dynamic tag switching (v1.1)
 - preserve / random / none logic per trait
 - Structured categories (face, body, outfit, pose, scene, etc.)
 - Preset system for style injection
-- Wildcard support ({tag} replacement)
+- Wildcard support (`{tag}` replacement)
 - Built-in prompt sanitization
-- Optional auto-fill (randomize_unspecified)
+- Optional auto-fill (`randomize_unspecified`)
 - Debug output for full traceability
-
 
 <img src="preview/ComfyUI_01543_.png" width="100%" />
 
@@ -99,8 +121,8 @@ Output:
     RandomPromptGenerator  
     (Category: Prompts)
 
-   Or just use the custom workflow "
-comfyui-character-composer Qwen workflow.json"  provided.
+Or use the included workflow:
+    comfyui-character-composer Qwen workflow.json
 
 <img src="preview/ComfyUI_01645_.png" width="100%" />
 
@@ -113,9 +135,9 @@ comfyui-character-composer Qwen workflow.json"  provided.
     - preserve → keep detected values  
     - random → randomize  
     - none → remove  
-3. Enable randomize_unspecified for auto-fill  
-4. Use {tags} for wildcard injection  
-5. Adjust extra_modifiers for styling  
+3. Enable `randomize_unspecified` for auto-fill  
+4. Use `{tags}` for wildcard injection  
+5. Adjust `extra_modifiers` for styling  
 
 <img src="preview/ComfyUI_01877_.png" width="100%" />
 
@@ -133,10 +155,10 @@ This repository includes a workflow adapted from Phr00t’s Qwen pipeline, modif
 
 ## Customization
 
-- tags.json → define traits  
-- DEFAULT_MODIFIERS → global style baseline  
-- PRESET_TRAITS → theme presets  
-- UI_LAYOUT → UI structure  
+- `tags.json` → define traits  
+- `DEFAULT_MODIFIERS` → global style baseline  
+- `PRESET_TRAITS` → theme presets  
+- `UI_LAYOUT` → UI structure  
 
 ---
 
@@ -152,9 +174,9 @@ This is a **prompt composition layer**.
 
 ## Outputs
 
-- positive_prompt → final prompt  
-- negative_prompt → filtered terms  
-- debug → selected traits  
+- `positive_prompt` → final prompt  
+- `negative_prompt` → filtered terms  
+- `debug` → selected traits  
 
 ---
 
