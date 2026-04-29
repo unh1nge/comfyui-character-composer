@@ -1,108 +1,84 @@
 {
   "hair_color": ["blonde", "brunette", "black", "red", "ash blonde", "platinum blonde", "silver", "light brown", "rose gold", "copper", "pastel pink", "lavender", "ombre", "split dye", "fiery crimson", "snow white", "emerald green streaks", "deep violet", "honey blonde", "champagne blonde", "strawberry blonde", "blue-black", "neon pink", "pure white", "golden blonde"],
   
-  "hair_style": ["beach waves", "wet hair", "curly", "long straight", "short bob", "messy bun", "high ponytail", "braided", "side braid", "twin tails", "double buns", "hime cut", "wolf cut", "face-framing braids", "sex hair", "bedhead tousled", "sweaty strands sticking to skin", "wild messy mane", "long hair covering nipples", "ponytail with hair pulled", "braids pulled like reins", "disheveled just-fucked hair", "pigtails for pulling", "hair gripped and yanked", "sweat-drenched hair", "bedroom hair", "tangled sex hair", "loose waves with cum strands"],
+  "hair_style": ["beach waves", "wet hair", "curly", "long straight", "short bob", "messy bun", "high ponytail", "braided", "side braid", "twin tails", "double buns", "hime cut", "wolf cut", "face-framing braids", "bedhead tousled", "wild messy mane", "ponytail", "loose waves", "tangled hair", "sweat-damp hair"],
   
-  "ethnicity": ["caucasian", "japanese", "korean", "filipina", "thai", "indonesian", "colombian", "brazilian", "cuban", "hawaiian", "polynesian", "italian", "spanish", "mixed race", "eurasian", "afro-latina", "arabian", "persian", "russian", "scandinavian", "latina", "chinese", "vietnamese", "thai-chinese mix", "ebony"],
+  "ethnicity": ["caucasian", "japanese", "korean", "filipina", "thai", "indonesian", "colombian", "brazilian", "cuban", "hawaiian", "polynesian", "italian", "spanish", "mixed race", "eurasian", "afro-latina", "arabian", "persian", "russian", "scandinavian", "latina", "chinese", "vietnamese", "thai-chinese mix", "african"],
   
-  "fantasy_race": ["human", "elf", "dark elf", "fairy", "fae", "kitsune", "catgirl", "bunny girl", "succubus", "angel", "vampire", "siren", "mermaid", "demon", "dryad", "celestial", "dragon girl", "oni", "lamia", "harpy", "incubus", "fallen angel", "lust demon", "tentacle girl", "slime girl", "werewolf girl", "orc girl", "devil", "imp", "nymph"],
+  "fantasy_race": ["human", "elf", "dark elf", "fairy", "fae", "kitsune", "catgirl", "bunny girl", "angel", "vampire", "siren", "mermaid", "demon", "dryad", "celestial", "dragon girl", "oni", "lamia", "harpy", "werewolf", "orc", "devil", "imp", "nymph"],
   
-  "age": ["young adult", "adult", "mature", "milf", "youthful", "barely legal", "college age", "experienced cougar", "teen-like", "prime of youth", "legal teen", "early 20s", "late 30s", "fertile age", "peak breeding age"],
+  "age": ["young adult", "adult", "mature", "early 20s", "late 20s", "30s", "40s"],
   
-  "eye_color": ["blue eyes", "green eyes", "brown eyes", "hazel eyes", "grey eyes", "amber eyes", "heterochromia", "crimson eyes", "golden eyes", "violet eyes", "glowing eyes", "lust-filled eyes", "half-lidded bedroom eyes", "heart-shaped pupils", "dilated pupils", "teary pleasure eyes", "fuck-drunk eyes"],
+  "eye_color": ["blue eyes", "green eyes", "brown eyes", "hazel eyes", "grey eyes", "amber eyes", "heterochromia", "crimson eyes", "golden eyes", "violet eyes", "glowing eyes"],
   
   "pose": [
-    "standing chest heavily pushed out",
-    "leaning forward deep cleavage",
-    "arms up back strongly arched",
-    "bending over hands on knees ass out",
-    "kneeling on all fours looking back seductively",
-    "deep squat knees wide open",
-    "kneeling arched back pushing tits forward",
-    "sitting on heels spreading knees",
-    "standing looking over shoulder with hip cocked",
-    "lying on back with knees up and apart",
-    "crouching low with legs spread",
-    "standing side view ass pushed out",
-    "arching back extremely while standing",
-    "hands behind head chest thrust forward",
-    "bending forward from waist tits hanging",
-    "kneeling with hands squeezing thighs",
-    "lying on back legs spread wide in mating press position",
-    "on all fours with back deeply arched and ass up",
-    "squatting with pussy exposed",
-    "spread eagle on bed",
-    "pinching nipples while biting lip",
-    "fingers in mouth with drool",
-    "bent over with hands spreading ass cheeks",
-    "riding pose straddling invisible partner",
-    "legs behind head flexible pose",
-    "standing with one leg lifted high against wall",
-    "missionary legs spread wide", 
-    "doggy style ready position",
-    "reverse cowgirl pose",
-    "fucked senseless on back",
-    "face down ass up",
-    "standing full nelson pose",
-    "against wall with leg held up",
-    "fingers spreading pussy lips",
-    "ass up face down deep arch"
+    "standing relaxed",
+    "leaning forward slightly",
+    "arms up stretch",
+    "hands on hips",
+    "kneeling pose",
+    "sitting casually",
+    "looking over shoulder",
+    "lying on back relaxed",
+    "crouching pose",
+    "standing side view",
+    "hands behind head",
+    "bending slightly forward",
+    "sitting with legs crossed",
+    "standing with one leg raised",
+    "against wall pose"
   ],
   
-  "expression": ["smiling", "sultry", "seductive", "smoldering", "provocative", "teasing", "flirtatious", "desirous", "serious", "playful", "confident", "dreamy", "alluring", "innocent", "shy smile", "ahegao", "biting lip", "tongue out", "rolling eyes in pleasure", "fuck-me eyes", "orgasm face", "lust-drunk", "begging look", "naughty smirk", "drooling", "ecstatic", "mind-broken", "seductive glare", "pleasure-drunk", "tongue hanging out", "crossed eyes", "cum-drunk expression", "whorish grin", "desperate for cock"],
+  "expression": ["smiling", "sultry", "seductive", "smoldering", "provocative", "teasing", "flirtatious", "desirous", "serious", "playful", "confident", "dreamy", "alluring", "innocent", "shy smile", "biting lip", "focused gaze", "soft smile", "intense look"],
   
-  "makeup": ["natural makeup", "bold makeup", "glossy lips", "smoky eyes", "glittering eyeshadow", "sultry makeup", "wet-look makeup", "satin lips", "dewy skin", "soft glam", "rosy cheeks", "heavy nose blush", "faux freckles", "graphic eyeliner", "under-eye stamps", "cum-gloss lips", "ruined makeup", "tear-streaked mascara", "sweaty glistening skin", "shiny body oil", "dick-sucking red lips", "smudged lipstick", "running mascara", "glazed donut lips", "cum on face makeup", "post-facial glow"],
+  "makeup": ["natural makeup", "bold makeup", "glossy lips", "smoky eyes", "glittering eyeshadow", "sultry makeup", "wet-look makeup", "satin lips", "dewy skin", "soft glam", "rosy cheeks", "heavy nose blush", "faux freckles", "graphic eyeliner", "under-eye stamps"],
   
-  "accessory": ["necklace", "earrings", "choker", "bracelet", "lace gloves", "thigh-high stockings", "garters", "ribbon", "body chain", "delicate cuffs", "anklet", "cat ears", "bunny ears", "flower crown", "scrunchie", "seashell necklace", "oversized headphones", "spiked choker", "layered silver chains", "butterfly hair clips", "nipple clamps", "collar with leash", "ball gag", "blindfold", "wrist restraints", "pasties only", "micro skirt with no panties", "crotchless panties", "anal plug with tail", "heart-shaped butt plug", "clit clamp", "belly chain", "thigh harness", "O-ring choker", "leather harness", "slave collar"],
+  "accessory": ["necklace", "earrings", "choker", "bracelet", "lace gloves", "thigh-high stockings", "garters", "ribbon", "body chain", "delicate cuffs", "anklet", "cat ears", "bunny ears", "flower crown", "scrunchie", "seashell necklace", "oversized headphones", "spiked choker", "layered silver chains", "butterfly hair clips", "belt", "scarf"],
   
-  "camera_angle": ["close-up portrait", "three-quarter shot", "full body shot", "low angle shot", "overhead shot", "mid shot", "cowboy shot", "extreme close-up on pussy", "worm's eye view upskirt", "from behind ass focus", "POV angle", "between legs shot", "looking up at underboob and face", " POV creampie angle", "close-up on gaping pussy", "ass spreading close-up", "looking down between tits"],
+  "camera_angle": ["close-up portrait", "three-quarter shot", "full body shot", "low angle shot", "overhead shot", "mid shot", "cowboy shot", "from behind", "POV angle", "looking up angle", "top-down angle"],
   
-  "preset": ["gravure", "editorial", "boudoir", "retro", "cinematic", "dreamlike", "sensual", "seductive", "wild", "ecstasy", "kawaii", "tropical", "hentai", "erotic", "pornographic", "nsfw", "raw sexual", "lewd", "slutty", "depraved", "hardcore", "explicit", "XXX", "breeding", "gangbang vibe"],
+  "preset": ["gravure", "editorial", "boudoir", "retro", "cinematic", "dreamlike", "sensual", "seductive", "kawaii", "tropical", "fashion", "lifestyle"],
   
-  "style_adjective": ["glossy", "alluring", "magnetic", "dreamy", "seductive", "steamy", "sultry", "provocative", "scorching", "lustrous", "intoxicating", "fiery", "luminous", "glamorous", "luxurious", "cute", "sweet", "filthy", "lewd", "obscene", "pornstar", "whorish", "fuckable", "nymphomaniac", "cock-hungry", "dick-worshipping", "cum-addicted", "brain-melted", "cock-drunk", "breeding material"],
+  "style_adjective": ["glossy", "alluring", "magnetic", "dreamy", "seductive", "sultry", "provocative", "luminous", "glamorous", "luxurious", "cute", "sweet", "bold", "elegant"],
   
-  "creative_twist": ["mysterious", "ethereal", "dreamlike haze", "vintage glamour", "surreal ambiance", "playful energy", "soft focus romance", "sun-kissed glow", "tropical paradise", "golden hour warmth", "post-orgasm glow", "sweaty after-sex", "cum-covered skin", "breeding pose", "public use vibe", "corrupted innocence", "mind break", "bukkake aftermath", "ruined orgasm", "feral mating", "creampie overflow"],
+  "creative_twist": ["mysterious", "ethereal", "dreamlike haze", "vintage glamour", "surreal ambiance", "playful energy", "soft focus romance", "sun-kissed glow", "tropical paradise", "golden hour warmth"],
   
-  "vibe": ["modern", "90s", "vintage", "boudoir", "kawaii", "soft pastel", "summer vacation", "pop-idol", "innocent", "romantic", "tropical resort", "island getaway", "pure slut energy", "feral heat", "breeding season", "cock worship", "bimbo", "dommy mommy", "bratty sub", "free use", "cum dumpster", "onahole", "glory hole ready", "public whore"],
+  "vibe": ["modern", "90s", "vintage", "boudoir", "kawaii", "soft pastel", "summer vacation", "pop-idol", "innocent", "romantic", "tropical resort", "island getaway"],
   
-  "setting": ["led light studio", "tropical beach futuristic", "cruise ship poolside", "rooftop bar", "tropical greek balcony", "ancient garden with extravagant vegatation", "lovehotel room", "futuristic tropical terrace", "indoor set", "tropical seaside porch", "led cozy bedroom", "futuristic living room", "velvet bed", "kashmir couch", "tropical garden jacuzzi", "bed sheet", "luxury red velvet sofa in a pirvate room", "silk bed", "tatami room", "onsen", "luxury resort", "tropical villa", "dark sex dungeon", "BDSM playroom", "strip club stage", "public restroom", "back alley", "luxury penthouse", "glory hole booth", "sex club", "abandoned warehouse"],
+  "setting": ["led light studio", "tropical beach", "cruise ship poolside", "rooftop bar", "balcony", "garden", "hotel room", "futuristic terrace", "indoor set", "seaside porch", "cozy bedroom", "living room", "velvet bed", "luxury sofa", "tatami room", "onsen", "luxury resort", "tropical villa", "penthouse", "studio apartment"],
   
-  "background_mood": ["soft light", "stormy sky", "golden hour", "magazine glow", "warm cinematic lighting", "moody evening light", "gentle haze", "bright morning light", "ocean breeze", "neon lights", "candlelit", "dim red lighting", "sex dungeon ambiance", "sweaty musk", "cum-stained sheets", "used condoms on floor"],
+  "background_mood": ["soft light", "stormy sky", "golden hour", "magazine glow", "warm cinematic lighting", "moody evening light", "gentle haze", "bright morning light", "ocean breeze", "neon lights", "candlelit"],
   
-  "prop": [
-    "chair", "bed with silk sheets", "large mirror", "pillow", "rose petals scattered", "champagne glass", "wine glass", "tropical cocktail", "high heels", "pearl necklace", "sheer curtains", "blindfold", "handcuffs", "thick pink vibrator", "big dildo", "oil bottle", "single ice cube", "whip", "leather belt",
-    "massive dildo", "nipple clamps with chain", "riding crop", "spreader bar", "sex swing", "cum-covered tits", 
-    "semen-covered body", "creampie dripping", " Hitachi wand"
-  ],
+  "prop": ["chair", "bed with silk sheets", "large mirror", "pillow", "rose petals", "champagne glass", "wine glass", "tropical cocktail", "high heels", "pearl necklace", "sheer curtains", "book", "camera", "flowers"],
   
-  "focus": [
-    "face focus", "upper body focus", "cleavage focus", "breasts focus", "tits focus", "underboob focus", "full body focus", "ass focus", "hips and ass focus", "portrait focus", "medium shot", "close-up on chest", "low angle shot emphasizing curves", "from below looking up at body", "side profile body focus",
-    "pussy focus", "spread pussy close-up", "asshole focus", "ahegao face focus", "nipples focus", "cum on body focus", "throat bulge focus", "cameltoe focus", "sweaty cleavage focus",
-    "creampie focus", "gaping pussy", "dripping cum", "clit focus", "titfuck focus", "deepthroat focus"
-  ],
+  "focus": ["face focus", "upper body focus", "cleavage focus", "full body focus", "portrait focus", "medium shot", "close-up", "low angle emphasizing silhouette", "side profile"],
   
   "outfit": [
-    "bikini", "azure blue sexy Siberian Santa costume with white fur and a furry russian Ushanka", "micro bikini", "slingshot bikini", "school swimsuit", "one-piece swimsuit", "lingerie", "see-through lingerie", "barely-there lingerie", "lace bodysuit", "sheer babydoll", "transparent chemise", "corset and garter", "silk robe open", "sheer dress", "tube top", "cropped tank top", "short shorts", "maid outfit", "sailor uniform", "yukata loosely open", "oversized sweater only", "topless", "completely nude",
-    "crotchless lingerie", "pasties and thong only", "fishnet bodystocking", "micro skirt no panties", "wet white t-shirt", "body harness", "shibari ropes", "latex catsuit", "nurse outfit ripped open", "cheerleader skirt flipped up", "naked apron", "virgin killer sweater", "strap-on harness",
-    "micro bikini pulled aside", "ripped stockings", "bondage tape", "leather harness only", "nothing but thigh highs and heels"
+    "bikini",
+    "micro bikini",
+    "one-piece swimsuit",
+    "lingerie",
+    "lace bodysuit",
+    "sheer dress",
+    "tube top",
+    "cropped tank top",
+    "short shorts",
+    "maid outfit",
+    "sailor uniform",
+    "yukata",
+    "oversized sweater",
+    "casual wear",
+    "evening dress",
+    "latex catsuit",
+    "nurse outfit",
+    "cheerleader outfit"
   ],
   
-  "atmosphere": [
-    "soft sunlight", "studio lighting", "golden hour", "warm cinematic light", "moody evening glow", "soft backlight", "gentle haze", "sweaty skin", "tropical heat", "velvet atmosphere", "magazine photoshoot glow", "intimate bedroom lighting",
-    "heavy breathing", "musky sex scent", "post-creampie drip", "orgasmic tension", "filthy lust", "animalistic heat", "thick sex smell", "wet slapping sounds", "cum dripping", "breeding heat"
-  ],
+  "atmosphere": ["soft sunlight", "studio lighting", "golden hour", "warm cinematic light", "moody evening glow", "soft backlight", "gentle haze", "tropical heat", "velvet atmosphere", "intimate lighting"],
   
-  "body_type": [
-    "slim", "skinny", "athletic", "sporty", "toned", "curvy", "voluptuous", "thick", "petite", "busty",
-    "hourglass", "thicc", "PAWG", "breeding hips", "fertile body", "juicy thick thighs", "bubble butt", "top-heavy",
-    "stacked", "thick thighs save lives", "child-bearing hips", "plump and fuckable", "perfect fuckdoll body"
-  ],
+  "body_type": ["slim", "skinny", "athletic", "sporty", "toned", "curvy", "voluptuous", "petite", "busty", "hourglass", "tall", "average build"],
   
-  "camera_gear": ["shot on 35mm film", "Kodak Portra 400", "Polaroid photo", "85mm lens", "Sony A7R IV", "vintage Leica", "shot on iPhone", "Canon R5", "raw photo", "high detail 8k", "filthy amateur cam"],
+  "camera_gear": ["shot on 35mm film", "Kodak Portra 400", "Polaroid photo", "85mm lens", "Sony A7R IV", "vintage Leica", "shot on iPhone", "Canon R5", "raw photo", "high detail 8k"],
   
-  "chest_size": [
-    "small breasts", "medium breasts", "large breasts", "full breasts", "heavy breasts", "ample breasts", "very busty",
-    "massive tits", "huge breasts", "enormous breasts", "titanic tits", "JJ-cup", "K-cup", "oversized breasts", "milky udders",
-    "god-tier tits", "humongous breasts", "absurdly large breasts", "pendulous heavy tits", "bouncing wrecking balls"
-  ]
+  "chest_size": ["small", "medium", "large", "full", "busty"]
 }
