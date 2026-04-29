@@ -53,7 +53,7 @@ This will **NOT appear in the UI**, because:
 
 - Model: Qwen-Image-Edit-Rapid-AIO  
 - Workflow: Adapted from Phr00t’s pipeline and included it as
-- comfyui-character-composer Qwen workflow.json  
+  comfyui-character-composer Qwen workflow.json  
 - Node: ComfyUI Character Composer  
 
 This setup combines:
