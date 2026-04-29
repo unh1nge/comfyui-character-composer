@@ -1,4 +1,5 @@
 # comfyui-character-composer
+<img src="preview/workflow example.png" alt="ComfyUI workflow example" width="100%" />
 
 A custom ComfyUI node and Qwen Workflow for generating polished character prompts using JSON-driven, configurable prompt traits.
 
@@ -19,11 +20,12 @@ The node is designed for easy character generation, with options for preserving 
 
 ## Installation
 
-1. Copy the `random_prompt_generator` folder into your ComfyUI `custom_nodes` directory.
+1. Copy the `comfyui-character-composer` folder into your ComfyUI `custom_nodes` directory.
 2. Restart ComfyUI so it detects the new node.
-3. Open the node graph and add the `RandomPromptGenerator` node. It is located in "Prompts".
+3. Open the node graph and add the `ComfyUICharacterComposer` node. It is located in "Prompts".
 
 <img src="preview/ComfyUI_01645_.png" alt="Random Prompt Generator preview 3" width="100%" />
+
 
 ## Usage
 
@@ -37,7 +39,7 @@ The node is designed for easy character generation, with options for preserving 
 ## Customization
 
 - Edit `tags.json` to modify available trait options.
-- Update `DEFAULT_MODIFIERS` in `random_prompt_generator.py` to change the default prompt modifiers.
+- Update `DEFAULT_MODIFIERS` in `comfyui_character_composer.py` to change the default prompt modifiers.
 - Add or adjust presets in `PRESET_TRAITS` for prebuilt theme combinations.
 
 ## Notes
