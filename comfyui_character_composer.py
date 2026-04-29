@@ -179,15 +179,19 @@ def _find_tags_json_files() -> list[str]:
     return sorted(tag_files)
 
 
-def _load_all_tag_data(tag_files: list[str]) -> dict:
-    all_tags = {key: set() for key in MASTER_KEYS}
+def _build_source_tag_options(tag_files: list[str]) -> dict[str, list[str]]:
+    tag_options = {key: [] for key in MASTER_KEYS}
     for tag_file in tag_files:
         data = _get_json_tags(tag_file)
         for key, values in data.items():
-            if key in all_tags:
-                all_tags[key].update(values)
+            if key not in tag_options:
+                continue
+            for value in values:
+                if value is None:
+                    continue
+                tag_options[key].append(f"{tag_file}::{value}")
 
-    return {key: sorted(all_tags[key]) if all_tags[key] else ["missing_key_in_json"] for key in MASTER_KEYS}
+    return {key: sorted(set(values)) if values else ["missing_key_in_json"] for key, values in tag_options.items()}
 
 
 def _get_json_tags(tag_file: str = DEFAULT_TAG_FILE) -> dict:
@@ -244,7 +248,7 @@ class ComfyUICharacterComposer:
 
         tags_files = _find_tags_json_files()
         tag_file_default = DEFAULT_TAG_FILE if DEFAULT_TAG_FILE in tags_files else (tags_files[0] if tags_files else DEFAULT_TAG_FILE)
-        tag_data = _load_all_tag_data(tags_files or [tag_file_default])
+        tag_data = _build_source_tag_options(tags_files or [tag_file_default])
         inputs = {
             "required": {
                 "input_prompt": ("STRING", {"default": "", "multiline": True}),
@@ -253,7 +257,7 @@ class ComfyUICharacterComposer:
                 "randomize_unspecified": ("BOOLEAN", {"default": False}),
                 "reset_to_preserve": ("BOOLEAN", {"default": False, "tooltip": "Force all non-preset trait controls back to preserve mode for this generation."}),
                 "bypass_generator": ("BOOLEAN", {"default": False}),
-                "tag_file": ("COMBO", {"default": tag_file_default, "options": tags_files or [DEFAULT_TAG_FILE], "tooltip": "Select which tags JSON file to load."}),
+                "tag_file": ("COMBO", {"default": tag_file_default, "options": tags_files or [DEFAULT_TAG_FILE], "tooltip": "Select which tags JSON file to use for generation. Dropdown values are prefixed with their source file."}),
             },
             "optional": { "image1": ("IMAGE", {"image_upload": True}) }
         }
@@ -291,7 +295,11 @@ class ComfyUICharacterComposer:
             elif _is_none_selection(ui_val):
                 final_choices[key] = None
             else:
-                final_choices[key] = ui_val
+                if "::" in ui_val:
+                    source_file, value = ui_val.split("::", 1)
+                    final_choices[key] = value if source_file == tag_file or value in tag_data[key] else None
+                else:
+                    final_choices[key] = ui_val
 
         preset_name = final_choices.get("preset")
         if preset_name and preset_name in PRESET_TRAITS:
