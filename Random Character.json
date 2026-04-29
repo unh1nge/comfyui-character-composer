@@ -1,1 +1,1014 @@
-{"id":"7b415fa9-1727-4db3-a39c-8d13ac5659d8","revision":0,"last_node_id":17,"last_link_id":34,"nodes":[{"id":1,"type":"CheckpointLoaderSimple","pos":[-583.2109445570629,90.92403389432755],"size":[369.53125,130.78125],"flags":{},"order":0,"mode":0,"inputs":[{"localized_name":"ckpt_name","name":"ckpt_name","type":"COMBO","widget":{"name":"ckpt_name"},"link":null}],"outputs":[{"localized_name":"MODEL","name":"MODEL","type":"MODEL","links":[1]},{"localized_name":"CLIP","name":"CLIP","type":"CLIP","links":[2,7]},{"localized_name":"VAE","name":"VAE","type":"VAE","links":[6,8,9]}],"properties":{"cnr_id":"comfy-core","ver":"0.19.3","Node name for S&R":"CheckpointLoaderSimple","ue_properties":{"widget_ue_connectable":{},"version":"7.7","input_ue_unconnectable":{}}},"widgets_values":["Qwen-Rapid-AIO-NSFW-v23.safetensors"]},{"id":5,"type":"VAEDecode","pos":[-106.01092273972858,513.3294902215096],"size":[225,72.15625],"flags":{},"order":8,"mode":0,"inputs":[{"localized_name":"samples","name":"samples","type":"LATENT","link":5},{"localized_name":"vae","name":"vae","type":"VAE","link":6}],"outputs":[{"localized_name":"IMAGE","name":"IMAGE","type":"IMAGE","links":[20]}],"properties":{"cnr_id":"comfy-core","ver":"0.19.3","Node name for S&R":"VAEDecode","ue_properties":{"widget_ue_connectable":{},"version":"7.7","input_ue_unconnectable":{}}},"widgets_values":[]},{"id":9,"type":"EmptyLatentImage","pos":[-598.4375948395875,865.1354804648324],"size":[270,144.109375],"flags":{},"order":1,"mode":0,"inputs":[{"localized_name":"width","name":"width","type":"INT","widget":{"name":"width"},"link":null},{"localized_name":"height","name":"height","type":"INT","widget":{"name":"height"},"link":null},{"localized_name":"batch_size","name":"batch_size","type":"INT","widget":{"name":"batch_size"},"link":null}],"outputs":[{"localized_name":"LATENT","name":"LATENT","type":"LATENT","links":[13]}],"title":"Final Image Size","properties":{"cnr_id":"comfy-core","ver":"0.19.3","Node name for S&R":"EmptyLatentImage","ue_properties":{"widget_ue_connectable":{},"version":"7.7","input_ue_unconnectable":{}}},"widgets_values":[1920,1080,1]},{"id":2,"type":"KSampler","pos":[-157.60724200729192,113.32207576734261],"size":[270,317.296875],"flags":{},"order":7,"mode":0,"inputs":[{"localized_name":"model","name":"model","type":"MODEL","link":1},{"localized_name":"positive","name":"positive","type":"CONDITIONING","link":3},{"localized_name":"negative","name":"negative","type":"CONDITIONING","link":4},{"localized_name":"latent_image","name":"latent_image","type":"LATENT","link":13},{"localized_name":"seed","name":"seed","type":"INT","widget":{"name":"seed"},"link":null},{"localized_name":"steps","name":"steps","type":"INT","widget":{"name":"steps"},"link":null},{"localized_name":"cfg","name":"cfg","type":"FLOAT","widget":{"name":"cfg"},"link":null},{"localized_name":"sampler_name","name":"sampler_name","type":"COMBO","widget":{"name":"sampler_name"},"link":null},{"localized_name":"scheduler","name":"scheduler","type":"COMBO","widget":{"name":"scheduler"},"link":null},{"localized_name":"denoise","name":"denoise","type":"FLOAT","widget":{"name":"denoise"},"link":null}],"outputs":[{"localized_name":"LATENT","name":"LATENT","type":"LATENT","links":[5]}],"properties":{"cnr_id":"comfy-core","ver":"0.19.3","Node name for S&R":"KSampler","ue_properties":{"widget_ue_connectable":{},"version":"7.7","input_ue_unconnectable":{}}},"widgets_values":[359211188711701,"randomize",4,1,"sa_solver","beta",1]},{"id":4,"type":"TextEncodeQwenImageEditPlus","pos":[-595.2288448286924,582.2276128020143],"size":[407.34375,212.125],"flags":{},"order":4,"mode":0,"inputs":[{"localized_name":"clip","name":"clip","type":"CLIP","link":7},{"localized_name":"vae","name":"vae","shape":7,"type":"VAE","link":9},{"localized_name":"image1","name":"image1","shape":7,"type":"IMAGE","link":null},{"localized_name":"image2","name":"image2","shape":7,"type":"IMAGE","link":null},{"localized_name":"image3","name":"image3","shape":7,"type":"IMAGE","link":null},{"localized_name":"prompt","name":"prompt","type":"STRING","widget":{"name":"prompt"},"link":null}],"outputs":[{"localized_name":"CONDITIONING","name":"CONDITIONING","type":"CONDITIONING","links":[4]}],"title":"TextEncodeQwenImageEditPlus Negative (leave blank)","properties":{"cnr_id":"comfy-core","ver":"0.19.3","Node name for S&R":"TextEncodeQwenImageEditPlus","ue_properties":{"widget_ue_connectable":{},"version":"7.7","input_ue_unconnectable":{}}},"widgets_values":[""]},{"id":3,"type":"TextEncodeQwenImageEditPlus","pos":[-595.574174628719,297.8968137643161],"size":[351.40625,212.125],"flags":{},"order":6,"mode":0,"inputs":[{"localized_name":"clip","name":"clip","type":"CLIP","link":2},{"localized_name":"vae","name":"vae","shape":7,"type":"VAE","link":8},{"localized_name":"image1","name":"image1","shape":7,"type":"IMAGE","link":33},{"localized_name":"image2","name":"image2","shape":7,"type":"IMAGE","link":null},{"localized_name":"image3","name":"image3","shape":7,"type":"IMAGE","link":null},{"localized_name":"prompt","name":"prompt","type":"STRING","widget":{"name":"prompt"},"link":34}],"outputs":[{"localized_name":"CONDITIONING","name":"CONDITIONING","type":"CONDITIONING","links":[3]}],"title":"TextEncodeQwenImageEditPlus Input Prompt","properties":{"cnr_id":"comfy-core","ver":"0.19.3","Node name for S&R":"TextEncodeQwenImageEditPlus","ue_properties":{"widget_ue_connectable":{},"version":"7.7","input_ue_unconnectable":{}}},"widgets_values":[""]},{"id":8,"type":"LoadImage","pos":[-1472.5341759318976,207.67102155557416],"size":[259.84375,340.125],"flags":{},"order":2,"mode":0,"inputs":[{"localized_name":"image","name":"image","type":"COMBO","widget":{"name":"image"},"link":null},{"localized_name":"choose file to upload","name":"upload","type":"IMAGEUPLOAD","widget":{"name":"upload"},"link":null}],"outputs":[{"localized_name":"IMAGE","name":"IMAGE","type":"IMAGE","links":[21,32]},{"localized_name":"MASK","name":"MASK","type":"MASK","links":null}],"title":"Optional Input Image","properties":{"cnr_id":"comfy-core","ver":"0.19.3","Node name for S&R":"LoadImage","ue_properties":{"widget_ue_connectable":{},"version":"7.7","input_ue_unconnectable":{}}},"widgets_values":["ComfyUI_01405_.png","image"]},{"id":11,"type":"SaveImage","pos":[-1455.9418130813624,689.4866056206608],"size":[270,316.109375],"flags":{},"order":9,"mode":0,"inputs":[{"localized_name":"images","name":"images","type":"IMAGE","link":20},{"localized_name":"filename_prefix","name":"filename_prefix","type":"STRING","widget":{"name":"filename_prefix"},"link":null}],"outputs":[],"properties":{"cnr_id":"comfy-core","ver":"0.19.3","Node name for S&R":"SaveImage","ue_properties":{"widget_ue_connectable":{},"input_ue_unconnectable":{},"version":"7.7"}},"widgets_values":["ComfyUI"]},{"id":13,"type":"Note","pos":[-2496.1173285073196,165.09543483430326],"size":[896.5625,854.6875],"flags":{},"order":3,"mode":0,"inputs":[],"outputs":[],"properties":{"ue_properties":{"widget_ue_connectable":{},"version":"7.8","input_ue_unconnectable":{}}},"widgets_values":["GRAVURE POSITIONS\n1. Basic Tease & Top Removal\nphotorealistic 4k solo porn photoshoot, woman slowly pulling her tight crop top up and over her huge breasts, fabric sliding across nipples, breasts dropping and bouncing heavily with natural weight, erect pink nipples, teasing motion, hands cupping and lifting her massive tits, squeezing them together creating deep cleavage, thumbs circling and pinching nipples, soft natural breast jiggle physics, sweat glistening on skin, close-up shots, ultra realistic skin texture pores and gloss, professional adult photoshoot lighting, smooth fluid motion, masterpiece, best quality, 8k\n\n2. Breast Play & Nipple Focus\nphotorealistic 4k solo female porn, woman sensually playing with her huge breasts, hands squeezing kneading and lifting them, fingers pinching rolling and tugging erect nipples, breasts deforming softly under pressure then bouncing back, heavy natural tit jiggle, nipples hardening and becoming puffy, light sweat sheen on cleavage and areolas, detailed skin texture, realistic breast physics, slow seductive motion, close-up on chest and nipples, professional porn photoshoot quality, ultra detailed glossy skin, sharp focus, masterpiece, best quality\n\n3. Spreading & Pussy Play\nphotorealistic 4k solo porn photoshoot, woman lying on her back legs spread wide, hands sliding down to spread her wet pussy lips open with two fingers, exposing pink inner folds and clit, fingers rubbing her swollen clit in slow circles then faster, inserting two fingers deep inside her pussy, pumping in and out, juices coating fingers and dripping down, aroused glistening wetness, heavy breathing implied, realistic wet textures and detailed anatomy, smooth fluid finger fucking motion, close-up shots, ultra realistic 8k, professional adult video quality, masterpiece, best quality\n\n4. Dildo Masturbation\nphotorealistic 4k solo female masturbation scene, woman on her back legs spread, slowly pushing a thick realistic dildo into her wet pussy, stretching her lips around the shaft, sliding it deep inside then pulling almost all the way out, rhythmic thrusting motion with the toy, free hand rubbing her clit rapidly, huge breasts bouncing and jiggling with each thrust, erect nipples, pussy juices coating the dildo and dripping down ass, intense pleasure motion, smooth fluid animation, detailed wet glossy textures, realistic penetration, professional pornhub style, ultra realistic 8k, sharp focus, masterpiece\n\n5. Oil + Tit Bounce\nphotorealistic 4k solo porn photoshoot, woman pouring shiny oil all over her huge breasts, oil dripping down cleavage and over erect nipples, hands sensually rubbing and massaging the oil into her tits, squeezing them hard making them glisten, lifting and dropping her heavy oily breasts creating big bounces and ripples, fingers playing with slippery nipples, slow then faster motion, excessive glossy wet shine, realistic heavy breast physics, close-up oily tit play, professional high-end adult photoshoot, ultra detailed skin reflections, 8k masterpiece, best quality\n\n\n6. On All Fours (Doggy Tease)\nphotorealistic 4k solo porn photoshoot, woman on all fours ass up high back arched, hands spreading her ass cheeks wide exposing wet pussy and tight asshole, pussy lips slightly open and glistening, fingers teasing her clit from behind, slow seductive hip swaying motion, huge breasts hanging and swinging heavily underneath, natural tit jiggle physics, detailed wet pussy, smooth fluid motion, close-up rear view, ultra realistic skin texture and gloss, professional adult photoshoot quality, 8k masterpiece, best quality\n\n7. Kneeling Tit Worship\nphotorealistic 4k solo female porn, woman kneeling upright, pushing her huge breasts together with both arms creating massive cleavage, leaning forward and licking her own nipples, tongue circling and flicking erect nipples, sucking on her own tits, heavy breasts squished and deforming, saliva strings on nipples, realistic breast physics and skin stretch, slow sensual motion, glossy wet nipples, ultra detailed textures, professional pornhub solo style, sharp focus, 8k masterpiece, best quality\n\n8. Legs Behind Head (Deep Spread)\nphotorealistic 4k solo porn photoshoot, woman lying on her back with legs folded all the way back behind her head in deep flexible position, hands spreading her pussy extremely wide open, fingers pulling labia apart exposing deep pink interior and clit, extremely exposed and stretched pussy, juices dripping down, huge breasts pressed against her chest and thighs from the position, detailed close-up anatomy, smooth teasing finger motion, ultra realistic wet glossy details, professional adult video quality, 8k sharp focus, masterpiece\n\n9. Standing Bent Over\nphotorealistic 4k solo porn, woman standing bent over at the waist with legs straight, hands gripping her ankles or shins, ass pushed out towards camera, reaching back with both hands to spread her ass and pussy lips wide, pussy visibly wet and dripping, huge breasts hanging and swinging freely, natural heavy breast pendulum motion, slight hip swaying, detailed glistening pussy and inner thighs, smooth fluid posing motion, rear angle close-up, ultra realistic skin and wetness, professional photoshoot, 8k masterpiece, best quality\n\n10. Squatting Spread\nphotorealistic 4k solo masturbation pose, woman in deep squat position with knees wide apart, feet flat, one hand spreading her pussy open while two fingers of the other hand pump in and out of her wet hole, squatting fuck motion, juices dripping onto the floor, huge breasts bouncing and jiggling intensely with every finger thrust, erect nipples, realistic heavy tit bounce physics, fast rhythmic finger fucking, glossy wet textures, dynamic motion, ultra realistic 8k, professional solo porn quality, masterpiece, best quality\n\nSEX POSITIONS\n\n1. Missionary\nphotorealistic 4k pornhub style hardcore sex, intense missionary position, woman lying on her back legs spread wide and pulled back, man on top thrusting deep and hard into her wet pussy, thick veiny cock slamming balls deep with powerful strokes, visible labia gripping the shaft, subtle stomach bulge on every thrust, balls slapping against her, huge breasts bouncing and jiggling heavily with each impact, erect nipples, natural heavy tit physics, sweat glistening on skin, pussy juices coating his cock and dripping down, fast intense rhythmic piston thrusting motion, smooth fluid animation, realistic penetration details, wet glossy textures, dynamic camera shake following the rhythm, ultra realistic 8k, sharp focus, professional adult video quality, masterpiece, best quality\n\n2. Cowgirl\nphotorealistic 4k pornhub style hardcore sex, intense cowgirl position, woman straddling the man bouncing aggressively up and down on his thick erect cock, taking him balls deep with every slam, pussy stretching tightly around the shaft, juices running down his cock and balls, huge breasts bouncing violently and slapping together with each hard ride, heavy natural tit jiggle physics, erect nipples, rapid rhythmic riding motion, ass rippling on impact, sweat flying, smooth fluid animation, realistic wet penetration details, glossy skin textures, slight camera bob following the bouncing, ultra realistic 8k, sharp focus, professional adult video quality, masterpiece, best quality\n\n3. Doggy Style\nphotorealistic 4k pornhub style hardcore sex, intense doggy style position, woman on all fours ass up high back arched, man behind her pounding her pussy hard and fast from behind, thick veiny cock slamming balls deep with powerful thrusts, ass rippling and jiggling with every impact, balls slapping against her clit, huge breasts swinging and bouncing heavily underneath, erect nipples, sweat dripping down her body, pussy juices coating his cock and dripping down her thighs, fast rough piston thrusting motion, smooth fluid animation, realistic penetration details, wet glossy textures, dynamic camera following the pounding, ultra realistic 8k, sharp focus, professional adult video quality, masterpiece, best quality\n\n4. Reverse Cowgirl\nphotorealistic 4k pornhub style hardcore sex, intense reverse cowgirl position, woman facing away straddling the man bouncing hard up and down on his thick cock, taking him balls deep repeatedly, pussy gripping the shaft tightly, juices dripping down his balls, huge breasts bouncing wildly and heavily with each slam, heavy natural tit jiggle physics, ass rippling on every downward thrust, rapid rhythmic riding motion, sweat glistening on skin, smooth fluid animation, realistic wet penetration details, slight camera bob following the bouncing, ultra realistic 8k, sharp focus, professional adult video quality, masterpiece, best quality\n\n5. Standing / Against the Wall\nphotorealistic 4k pornhub style hardcore sex, intense standing sex against the wall, woman lift\n\nPOV\n\n1. POV Blowjob\nphotorealistic 4k POV blowjob, first person view looking down, woman on her knees giving intense sloppy blowjob, thick veiny cock sliding deep into her warm wet mouth, lips stretched tightly around the shaft, head bobbing back and forth rhythmically, tongue swirling around the head and underside, heavy drooling and saliva strings dripping down chin onto her huge breasts, one hand stroking the base firmly while sucking the tip, occasional deepthroat with visible throat bulge, wet gagging sounds implied, saliva coating the entire cock and dripping heavily, fast and slow alternating sucking motion, realistic wet glossy textures, detailed skin shine, smooth fluid animation, professional pornhub POV style, ultra realistic 8k, sharp focus, masterpiece, best quality\n\n2. POV Doggy Style\nphotorealistic 4k POV doggy style sex, first person view from behind, woman on all fours ass up high back arched, thick cock thrusting hard and deep into her wet pussy from behind, balls slapping against her clit with every powerful stroke, ass cheeks rippling and jiggling intensely with each impact, pussy lips gripping the shaft tightly on every outstroke, visible creamy juices coating the cock and dripping down her thighs, huge breasts swinging and bouncing heavily underneath, natural heavy tit jiggle physics, fast rough piston thrusting motion, sweat glistening on skin, realistic penetration details and wet glossy textures, dynamic camera shake following the pounding rhythm, professional POV pornhub style, ultra realistic 8k, sharp focus, masterpiece, best quality\n\n3. POV Cowgirl (Woman on Top)\nphotorealistic 4k POV cowgirl sex, first person view looking up, woman straddling and riding cock aggressively, bouncing up and down taking the thick shaft balls deep with every slam, pussy stretching tightly around the cock, juices dripping down the shaft and onto balls, huge breasts bouncing violently up and down right in front of camera, heavy natural tit jiggle and slap physics, erect nipples, rapid rhythmic riding motion, ass rippling on every downward thrust, smooth fluid bouncing animation, realistic wet penetration details, glossy skin and fluids, professional POV pornhub style, ultra realistic 8k, sharp focus, masterpiece, best quality\n\n4. POV Titjob\nphotorealistic 4k POV titjob, first person view looking down, woman kneeling and pressing her massive oily breasts tightly around the cock, sliding her huge tits up and down the shaft in long strokes, cock disappearing deep into soft cleavage then emerging at the top, head of cock rubbing against her tongue and lips, hands squeezing breasts together firmly, realistic breast deformation and jiggle physics, glossy wet oil shine on skin, fast then slow titfucking motion, pre-cum and saliva dripping, professional POV pornhub style, ultra detailed glossy textures, 8k sharp focus, masterpiece, best quality\n\n5. POV Missionary\nphotorealistic 4k POV missionary sex, first person view looking down, woman lying on her back legs spread wide and pulled back, thick cock thrusting deep into her wet pussy with strong powerful strokes, visible stomach bulge on every deep penetration, balls slapping against her, huge breasts bouncing and jiggling wildly with each thrust right in view, erect nipples, pussy juices coating the cock and dripping down, fast intense rhythmic pounding motion, sweat on skin, realistic wet glossy penetration details, slight camera shake following the rhythm, professional POV pornhub style, ultra realistic 8k, sharp focus, masterpiece, best quality\n\n\n\n"],"color":"#432","bgcolor":"#653"},{"id":17,"type":"RandomPromptGenerator","pos":[-1075.9093122446036,227.44767650286187],"size":[400,1347.984375],"flags":{},"order":5,"mode":0,"inputs":[{"localized_name":"image1","name":"image1","shape":7,"type":"IMAGE","link":32},{"localized_name":"input_prompt","name":"input_prompt","type":"STRING","widget":{"name":"input_prompt"},"link":null},{"localized_name":"seed","name":"seed","type":"INT","widget":{"name":"seed"},"link":null},{"localized_name":"extra_modifiers","name":"extra_modifiers","type":"STRING","widget":{"name":"extra_modifiers"},"link":null},{"localized_name":"randomize_unspecified","name":"randomize_unspecified","type":"BOOLEAN","widget":{"name":"randomize_unspecified"},"link":null},{"localized_name":"bypass_generator","name":"bypass_generator","type":"BOOLEAN","widget":{"name":"bypass_generator"},"link":null},{"localized_name":"--- FACE & HAIR ---","name":"--- FACE & HAIR ---","type":"STRING","widget":{"name":"--- FACE & HAIR ---"},"link":null},{"localized_name":"hair_color","name":"hair_color","type":"COMBO","widget":{"name":"hair_color"},"link":null},{"localized_name":"hair_style","name":"hair_style","type":"COMBO","widget":{"name":"hair_style"},"link":null},{"localized_name":"eye_color","name":"eye_color","type":"COMBO","widget":{"name":"eye_color"},"link":null},{"localized_name":"expression","name":"expression","type":"COMBO","widget":{"name":"expression"},"link":null},{"localized_name":"makeup","name":"makeup","type":"COMBO","widget":{"name":"makeup"},"link":null},{"localized_name":"--- BODY & IDENTITY ---","name":"--- BODY & IDENTITY ---","type":"STRING","widget":{"name":"--- BODY & IDENTITY ---"},"link":null},{"localized_name":"body_type","name":"body_type","type":"COMBO","widget":{"name":"body_type"},"link":null},{"localized_name":"chest_size","name":"chest_size","type":"COMBO","widget":{"name":"chest_size"},"link":null},{"localized_name":"age","name":"age","type":"COMBO","widget":{"name":"age"},"link":null},{"localized_name":"ethnicity","name":"ethnicity","type":"COMBO","widget":{"name":"ethnicity"},"link":null},{"localized_name":"fantasy_race","name":"fantasy_race","type":"COMBO","widget":{"name":"fantasy_race"},"link":null},{"localized_name":"--- OUTFIT & ACCESSORIES ---","name":"--- OUTFIT & ACCESSORIES ---","type":"STRING","widget":{"name":"--- OUTFIT & ACCESSORIES ---"},"link":null},{"localized_name":"outfit","name":"outfit","type":"COMBO","widget":{"name":"outfit"},"link":null},{"localized_name":"accessory","name":"accessory","type":"COMBO","widget":{"name":"accessory"},"link":null},{"localized_name":"--- POSE & CAMERA ---","name":"--- POSE & CAMERA ---","type":"STRING","widget":{"name":"--- POSE & CAMERA ---"},"link":null},{"localized_name":"pose","name":"pose","type":"COMBO","widget":{"name":"pose"},"link":null},{"localized_name":"focus","name":"focus","type":"COMBO","widget":{"name":"focus"},"link":null},{"localized_name":"camera_angle","name":"camera_angle","type":"COMBO","widget":{"name":"camera_angle"},"link":null},{"localized_name":"--- STYLE & VIBE ---","name":"--- STYLE & VIBE ---","type":"STRING","widget":{"name":"--- STYLE & VIBE ---"},"link":null},{"localized_name":"preset","name":"preset","type":"COMBO","widget":{"name":"preset"},"link":null},{"localized_name":"vibe","name":"vibe","type":"COMBO","widget":{"name":"vibe"},"link":null},{"localized_name":"style_adjective","name":"style_adjective","type":"COMBO","widget":{"name":"style_adjective"},"link":null},{"localized_name":"creative_twist","name":"creative_twist","type":"COMBO","widget":{"name":"creative_twist"},"link":null},{"localized_name":"--- SCENE & ATMOSPHERE ---","name":"--- SCENE & ATMOSPHERE ---","type":"STRING","widget":{"name":"--- SCENE & ATMOSPHERE ---"},"link":null},{"localized_name":"setting","name":"setting","type":"COMBO","widget":{"name":"setting"},"link":null},{"localized_name":"background_mood","name":"background_mood","type":"COMBO","widget":{"name":"background_mood"},"link":null},{"localized_name":"atmosphere","name":"atmosphere","type":"COMBO","widget":{"name":"atmosphere"},"link":null},{"localized_name":"prop","name":"prop","type":"COMBO","widget":{"name":"prop"},"link":null}],"outputs":[{"localized_name":"positive_prompt","name":"positive_prompt","type":"STRING","links":[34]},{"localized_name":"negative_prompt","name":"negative_prompt","type":"STRING","links":null},{"localized_name":"debug","name":"debug","type":"STRING","links":null},{"localized_name":"image1","name":"image1","type":"IMAGE","links":[33]}],"properties":{"ue_properties":{"widget_ue_connectable":{},"input_ue_unconnectable":{}},"Node name for S&R":"RandomPromptGenerator"},"widgets_values":["big tits",1060476258754014,"randomize","gravure, photorealistic, soft lighting, high detail, 8k, ultra realistic, cinematic composition, sensual mood, soft focus, warm glow, intimate atmosphere, cute aesthetic, glossy aesthetic, tropical glamour, mythic elegance, moody shadows",true,false,"","preserve","preserve","preserve","preserve","preserve","","preserve","preserve","preserve","preserve","preserve","","corset and garter","preserve","","preserve","preserve","preserve","","preserve","preserve","preserve","preserve","","preserve","preserve","preserve","none"]}],"links":[[1,1,0,2,0,"MODEL"],[2,1,1,3,0,"CLIP"],[3,3,0,2,1,"CONDITIONING"],[4,4,0,2,2,"CONDITIONING"],[5,2,0,5,0,"LATENT"],[6,1,2,5,1,"VAE"],[7,1,1,4,0,"CLIP"],[8,1,2,3,1,"VAE"],[9,1,2,4,1,"VAE"],[13,9,0,2,3,"LATENT"],[20,5,0,11,0,"IMAGE"],[32,8,0,17,0,"IMAGE"],[33,17,3,3,2,"IMAGE"],[34,17,0,3,5,"STRING"]],"groups":[],"config":{},"extra":{"ds":{"scale":0.8390545288824468,"offset":[2027.6411893573575,-388.0374247675151]},"ue_links":[],"frontendVersion":"1.26.13","VHS_latentpreview":false,"VHS_latentpreviewrate":0,"VHS_MetadataImage":true,"VHS_KeepIntermediate":true,"workflowRendererVersion":"Vue-corrected","links_added_by_ue":[]},"version":0.4}
+{
+  "id": "f2f857af-73aa-453e-b4ae-ac4683c29aaa",
+  "revision": 0,
+  "last_node_id": 11,
+  "last_link_id": 20,
+  "nodes": [
+    {
+      "id": 1,
+      "type": "CheckpointLoaderSimple",
+      "pos": [
+        -612.049976870488,
+        114.9592551459657
+      ],
+      "size": [
+        369.640625,
+        130.65625
+      ],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "ckpt_name",
+          "name": "ckpt_name",
+          "type": "COMBO",
+          "widget": {
+            "name": "ckpt_name"
+          },
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "MODEL",
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            1
+          ]
+        },
+        {
+          "localized_name": "CLIP",
+          "name": "CLIP",
+          "type": "CLIP",
+          "links": [
+            2,
+            7
+          ]
+        },
+        {
+          "localized_name": "VAE",
+          "name": "VAE",
+          "type": "VAE",
+          "links": [
+            6,
+            8,
+            9
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "CheckpointLoaderSimple",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "version": "7.7",
+          "input_ue_unconnectable": {}
+        }
+      },
+      "widgets_values": [
+        "Qwen-Rapid-AIO-NSFW-v23.safetensors"
+      ]
+    },
+    {
+      "id": 6,
+      "type": "PreviewImage",
+      "pos": [
+        -56.423558752929694,
+        611.5978552191951
+      ],
+      "size": [
+        266.265625,
+        346.390625
+      ],
+      "flags": {},
+      "order": 9,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "images",
+          "name": "images",
+          "type": "IMAGE",
+          "link": 10
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "Node name for S&R": "PreviewImage",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "version": "7.7",
+          "input_ue_unconnectable": {}
+        }
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 5,
+      "type": "VAEDecode",
+      "pos": [
+        -85.1773345849058,
+        466.86298995287683
+      ],
+      "size": [
+        225,
+        72
+      ],
+      "flags": {},
+      "order": 8,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "samples",
+          "name": "samples",
+          "type": "LATENT",
+          "link": 5
+        },
+        {
+          "localized_name": "vae",
+          "name": "vae",
+          "type": "VAE",
+          "link": 6
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "IMAGE",
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            10,
+            20
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "VAEDecode",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "version": "7.7",
+          "input_ue_unconnectable": {}
+        }
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 9,
+      "type": "EmptyLatentImage",
+      "pos": [
+        -556.7730200013252,
+        828.2839984612583
+      ],
+      "size": [
+        270,
+        144
+      ],
+      "flags": {},
+      "order": 1,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "width",
+          "name": "width",
+          "type": "INT",
+          "widget": {
+            "name": "width"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "height",
+          "name": "height",
+          "type": "INT",
+          "widget": {
+            "name": "height"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "batch_size",
+          "name": "batch_size",
+          "type": "INT",
+          "widget": {
+            "name": "batch_size"
+          },
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "LATENT",
+          "name": "LATENT",
+          "type": "LATENT",
+          "links": [
+            13
+          ]
+        }
+      ],
+      "title": "Final Image Size",
+      "properties": {
+        "Node name for S&R": "EmptyLatentImage",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "version": "7.7",
+          "input_ue_unconnectable": {}
+        }
+      },
+      "widgets_values": [
+        1920,
+        1080,
+        1
+      ]
+    },
+    {
+      "id": 2,
+      "type": "KSampler",
+      "pos": [
+        -157.60202082755768,
+        113.3224888848986
+      ],
+      "size": [
+        270,
+        317.3125
+      ],
+      "flags": {},
+      "order": 7,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "model",
+          "name": "model",
+          "type": "MODEL",
+          "link": 1
+        },
+        {
+          "localized_name": "positive",
+          "name": "positive",
+          "type": "CONDITIONING",
+          "link": 3
+        },
+        {
+          "localized_name": "negative",
+          "name": "negative",
+          "type": "CONDITIONING",
+          "link": 4
+        },
+        {
+          "localized_name": "latent_image",
+          "name": "latent_image",
+          "type": "LATENT",
+          "link": 13
+        },
+        {
+          "localized_name": "seed",
+          "name": "seed",
+          "type": "INT",
+          "widget": {
+            "name": "seed"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "steps",
+          "name": "steps",
+          "type": "INT",
+          "widget": {
+            "name": "steps"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "cfg",
+          "name": "cfg",
+          "type": "FLOAT",
+          "widget": {
+            "name": "cfg"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "sampler_name",
+          "name": "sampler_name",
+          "type": "COMBO",
+          "widget": {
+            "name": "sampler_name"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "scheduler",
+          "name": "scheduler",
+          "type": "COMBO",
+          "widget": {
+            "name": "scheduler"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "denoise",
+          "name": "denoise",
+          "type": "FLOAT",
+          "widget": {
+            "name": "denoise"
+          },
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "LATENT",
+          "name": "LATENT",
+          "type": "LATENT",
+          "links": [
+            5
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "KSampler",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "version": "7.7",
+          "input_ue_unconnectable": {}
+        }
+      },
+      "widgets_values": [
+        65454653,
+        "randomize",
+        4,
+        1,
+        "sa_solver",
+        "beta",
+        1
+      ]
+    },
+    {
+      "id": 4,
+      "type": "TextEncodeQwenImageEditPlus",
+      "pos": [
+        -623.7606177651583,
+        552.4025065069756
+      ],
+      "size": [
+        407.390625,
+        212
+      ],
+      "flags": {},
+      "order": 5,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "clip",
+          "name": "clip",
+          "type": "CLIP",
+          "link": 7
+        },
+        {
+          "localized_name": "vae",
+          "name": "vae",
+          "shape": 7,
+          "type": "VAE",
+          "link": 9
+        },
+        {
+          "localized_name": "image1",
+          "name": "image1",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": null
+        },
+        {
+          "localized_name": "prompt",
+          "name": "prompt",
+          "type": "STRING",
+          "widget": {
+            "name": "prompt"
+          },
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "CONDITIONING",
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "links": [
+            4
+          ]
+        }
+      ],
+      "title": "TextEncodeQwenImageEditPlus Negative (leave blank)",
+      "properties": {
+        "Node name for S&R": "TextEncodeQwenImageEditPlus",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "version": "7.7",
+          "input_ue_unconnectable": {}
+        }
+      },
+      "widgets_values": [
+        ""
+      ]
+    },
+    {
+      "id": 3,
+      "type": "TextEncodeQwenImageEditPlus",
+      "pos": [
+        -601.8515455698932,
+        278.15873747018827
+      ],
+      "size": [
+        351.5,
+        212
+      ],
+      "flags": {},
+      "order": 6,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "clip",
+          "name": "clip",
+          "type": "CLIP",
+          "link": 2
+        },
+        {
+          "localized_name": "vae",
+          "name": "vae",
+          "shape": 7,
+          "type": "VAE",
+          "link": 8
+        },
+        {
+          "localized_name": "image1",
+          "name": "image1",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": 24
+        },
+        {
+          "localized_name": "prompt",
+          "name": "prompt",
+          "type": "STRING",
+          "widget": {
+            "name": "prompt"
+          },
+          "link": 21
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "CONDITIONING",
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "links": [
+            3
+          ]
+        }
+      ],
+      "title": "TextEncodeQwenImageEditPlus Input Prompt",
+      "properties": {
+        "Node name for S&R": "TextEncodeQwenImageEditPlus",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "version": "7.7",
+          "input_ue_unconnectable": {}
+        }
+      },
+      "widgets_values": [
+        "put the two girls next to each other, tropical background"
+      ]
+    },
+    {
+      "id": 12,
+      "type": "RandomPromptGenerator",
+      "pos": [
+        -940,
+        280
+      ],
+      "size": [
+        360,
+        360
+      ],
+      "flags": {},
+      "order": 11,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "input_prompt",
+          "name": "input_prompt",
+          "type": "STRING",
+          "widget": {
+            "name": "input_prompt"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "seed",
+          "name": "seed",
+          "type": "INT",
+          "widget": {
+            "name": "seed"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "keep_hair",
+          "name": "keep_hair",
+          "type": "BOOLEAN",
+          "widget": {
+            "name": "keep_hair"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "keep_ethnicity",
+          "name": "keep_ethnicity",
+          "type": "BOOLEAN",
+          "widget": {
+            "name": "keep_ethnicity"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "keep_eye_color",
+          "name": "keep_eye_color",
+          "type": "BOOLEAN",
+          "widget": {
+            "name": "keep_eye_color"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "keep_pose",
+          "name": "keep_pose",
+          "type": "BOOLEAN",
+          "widget": {
+            "name": "keep_pose"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "keep_location",
+          "name": "keep_location",
+          "type": "BOOLEAN",
+          "widget": {
+            "name": "keep_location"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "keep_outfit",
+          "name": "keep_outfit",
+          "type": "BOOLEAN",
+          "widget": {
+            "name": "keep_outfit"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "keep_atmosphere",
+          "name": "keep_atmosphere",
+          "type": "BOOLEAN",
+          "widget": {
+            "name": "keep_atmosphere"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "extra_modifiers",
+          "name": "extra_modifiers",
+          "type": "STRING",
+          "widget": {
+            "name": "extra_modifiers"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "image1",
+          "name": "image1",
+          "type": "IMAGE",
+          "link": 18
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "prompt",
+          "name": "prompt",
+          "type": "STRING",
+          "links": [
+            21
+          ]
+        },
+        {
+          "localized_name": "debug",
+          "name": "debug",
+          "type": "STRING",
+          "links": []
+        },
+        {
+          "localized_name": "image1",
+          "name": "image1",
+          "type": "IMAGE",
+          "links": [
+            24
+          ]
+        }
+      ],
+      "title": "Random Prompt Generator",
+      "properties": {
+        "Node name for S&R": "RandomPromptGenerator",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "version": "7.7",
+          "input_ue_unconnectable": {}
+        }
+      },
+      "widgets_values": [
+        "put the two girls next to each other, tropical background",
+        0,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        "photorealistic, 8k, cinematic lighting"
+      ]
+    },
+    {
+      "id": 8,
+      "type": "LoadImage",
+      "pos": [
+        -933.4817991218513,
+        110.4067823110806
+      ],
+      "size": [
+        259.921875,
+        340
+      ],
+      "flags": {},
+      "order": 2,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "image",
+          "name": "image",
+          "type": "COMBO",
+          "widget": {
+            "name": "image"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "choose file to upload",
+          "name": "upload",
+          "type": "IMAGEUPLOAD",
+          "widget": {
+            "name": "upload"
+          },
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "IMAGE",
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            18
+          ]
+        },
+        {
+          "localized_name": "MASK",
+          "name": "MASK",
+          "type": "MASK",
+          "links": null
+        }
+      ],
+      "title": "Input Image",
+      "properties": {
+        "Node name for S&R": "LoadImage",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "version": "7.7",
+          "input_ue_unconnectable": {}
+        }
+      },
+      "widgets_values": [
+        "ComfyUI-90_left_00037_.png",
+        "image"
+      ]
+    },
+    {
+      "id": 7,
+      "type": "LoadImage",
+      "pos": [
+        -967.1655808594558,
+        532.1928205692835
+      ],
+      "size": [
+        274.0625,
+        340
+      ],
+      "flags": {},
+      "order": 3,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "image",
+          "name": "image",
+          "type": "COMBO",
+          "widget": {
+            "name": "image"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "choose file to upload",
+          "name": "upload",
+          "type": "IMAGEUPLOAD",
+          "widget": {
+            "name": "upload"
+          },
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "IMAGE",
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": null
+        },
+        {
+          "localized_name": "MASK",
+          "name": "MASK",
+          "type": "MASK",
+          "links": null
+        }
+      ],
+      "title": "Input Image",
+      "properties": {
+        "Node name for S&R": "LoadImage",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "version": "7.7",
+          "input_ue_unconnectable": {}
+        }
+      },
+      "widgets_values": [
+        "ComfyUI-aerial_view_00036_.png",
+        "image"
+      ]
+    },
+    {
+      "id": 10,
+      "type": "LoadImage",
+      "pos": [
+        -966.8177588040777,
+        967.736152263278
+      ],
+      "size": [
+        274.0625,
+        340
+      ],
+      "flags": {},
+      "order": 4,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "image",
+          "name": "image",
+          "type": "COMBO",
+          "widget": {
+            "name": "image"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "choose file to upload",
+          "name": "upload",
+          "type": "IMAGEUPLOAD",
+          "widget": {
+            "name": "upload"
+          },
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "IMAGE",
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": null
+        },
+        {
+          "localized_name": "MASK",
+          "name": "MASK",
+          "type": "MASK",
+          "links": null
+        }
+      ],
+      "title": "Input Image",
+      "properties": {
+        "Node name for S&R": "LoadImage",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "version": "7.7",
+          "input_ue_unconnectable": {}
+        }
+      },
+      "widgets_values": [
+        "ComfyUI-aerial_view_00036_.png",
+        "image"
+      ]
+    },
+    {
+      "id": 11,
+      "type": "SaveImage",
+      "pos": [
+        306.19828134856834,
+        541.4071895124478
+      ],
+      "size": [
+        270,
+        84
+      ],
+      "flags": {},
+      "order": 10,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "images",
+          "name": "images",
+          "type": "IMAGE",
+          "link": 20
+        },
+        {
+          "localized_name": "filename_prefix",
+          "name": "filename_prefix",
+          "type": "STRING",
+          "widget": {
+            "name": "filename_prefix"
+          },
+          "link": null
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "Node name for S&R": "SaveImage",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "input_ue_unconnectable": {},
+          "version": "7.7"
+        }
+      },
+      "widgets_values": [
+        "ComfyUI"
+      ]
+    }
+  ],
+  "links": [
+    [
+      1,
+      1,
+      0,
+      2,
+      0,
+      "MODEL"
+    ],
+    [
+      2,
+      1,
+      1,
+      3,
+      0,
+      "CLIP"
+    ],
+    [
+      3,
+      3,
+      0,
+      2,
+      1,
+      "CONDITIONING"
+    ],
+    [
+      4,
+      4,
+      0,
+      2,
+      2,
+      "CONDITIONING"
+    ],
+    [
+      5,
+      2,
+      0,
+      5,
+      0,
+      "LATENT"
+    ],
+    [
+      6,
+      1,
+      2,
+      5,
+      1,
+      "VAE"
+    ],
+    [
+      7,
+      1,
+      1,
+      4,
+      0,
+      "CLIP"
+    ],
+    [
+      8,
+      1,
+      2,
+      3,
+      1,
+      "VAE"
+    ],
+    [
+      9,
+      1,
+      2,
+      4,
+      1,
+      "VAE"
+    ],
+    [
+      10,
+      5,
+      0,
+      6,
+      0,
+      "IMAGE"
+    ],
+    [
+      13,
+      9,
+      0,
+      2,
+      3,
+      "LATENT"
+    ],
+    [
+      20,
+      5,
+      0,
+      11,
+      0,
+      "IMAGE"
+    ],
+    [
+      21,
+      12,
+      0,
+      3,
+      5,
+      "STRING"
+    ],
+    [
+      24,
+      12,
+      2,
+      3,
+      2,
+      "IMAGE"
+    ],
+    [
+      18,
+      8,
+      0,
+      12,
+      10,
+      "IMAGE"
+    ]
+  ],
+  "groups": [],
+  "config": {},
+  "extra": {
+    "ds": {
+      "scale": 0.8373815320838295,
+      "offset": [
+        1240.2780528592316,
+        -3.7458383226466676
+      ]
+    },
+    "ue_links": [],
+    "frontendVersion": "1.26.13",
+    "VHS_latentpreview": false,
+    "VHS_latentpreviewrate": 0,
+    "VHS_MetadataImage": true,
+    "VHS_KeepIntermediate": true,
+    "workflowRendererVersion": "Vue-corrected",
+    "links_added_by_ue": []
+  },
+  "version": 0.4
+}
