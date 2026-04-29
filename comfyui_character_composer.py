@@ -179,6 +179,17 @@ def _find_tags_json_files() -> list[str]:
     return sorted(tag_files)
 
 
+def _load_all_tag_data(tag_files: list[str]) -> dict:
+    all_tags = {key: set() for key in MASTER_KEYS}
+    for tag_file in tag_files:
+        data = _get_json_tags(tag_file)
+        for key, values in data.items():
+            if key in all_tags:
+                all_tags[key].update(values)
+
+    return {key: sorted(all_tags[key]) if all_tags[key] else ["missing_key_in_json"] for key in MASTER_KEYS}
+
+
 def _get_json_tags(tag_file: str = DEFAULT_TAG_FILE) -> dict:
     """Reads the tags JSON file. Returns empty lists for any missing MASTER_KEYS."""
     tags_path = _resolve_tag_file_path(tag_file)
@@ -233,7 +244,7 @@ class ComfyUICharacterComposer:
 
         tags_files = _find_tags_json_files()
         tag_file_default = DEFAULT_TAG_FILE if DEFAULT_TAG_FILE in tags_files else (tags_files[0] if tags_files else DEFAULT_TAG_FILE)
-        tag_data = _get_json_tags(tag_file_default)
+        tag_data = _load_all_tag_data(tags_files or [tag_file_default])
         inputs = {
             "required": {
                 "input_prompt": ("STRING", {"default": "", "multiline": True}),
