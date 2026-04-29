@@ -1,4 +1,4 @@
-# Random Prompt Generator
+# comfyui-character-composer
 
 A custom ComfyUI node and Qwen Workflow for generating polished character prompts using JSON-driven, configurable prompt traits.
 
