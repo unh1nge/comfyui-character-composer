@@ -1,84 +1,660 @@
 {
-  "hair_color": ["blonde", "brunette", "black", "red", "ash blonde", "platinum blonde", "silver", "light brown", "rose gold", "copper", "pastel pink", "lavender", "ombre", "split dye", "fiery crimson", "snow white", "emerald green streaks", "deep violet", "honey blonde", "champagne blonde", "strawberry blonde", "blue-black", "neon pink", "pure white", "golden blonde"],
+  "hair_color": [
+    "blonde",
+    "honey blonde with soft highlights",
+    "platinum blonde with cool undertones",
+    "ash blonde muted tone",
+    "black",
+    "blue-black with subtle sheen",
+    "brunette",
+    "deep brunette rich tone",
+    "red",
+    "copper red with warm glow",
+    "silver metallic sheen",
+    "light brown natural tone",
+    "rose gold soft blend",
+    "pastel pink soft tone",
+    "lavender tint",
+    "ombre gradient fade",
+    "split dye high contrast",
+    "fiery crimson intense tone",
+    "pure white clean tone",
+    "emerald green streaks",
+    "deep violet richness",
+    "golden blonde sunlit tone"
+  ],
+
+  "subject": [
   
-  "hair_style": ["beach waves", "wet hair", "curly", "long straight", "short bob", "messy bun", "high ponytail", "braided", "side braid", "twin tails", "double buns", "hime cut", "wolf cut", "face-framing braids", "bedhead tousled", "wild messy mane", "ponytail", "loose waves", "tangled hair", "sweat-damp hair"],
+   
+    "pornstar",
+    "celebrity",
+    "goddess", 
+    "model",
+    "idol",
+    "influencer",
+    "cosplayer",
+    "dancer",
+    "athlete"
   
-  "ethnicity": ["caucasian", "japanese", "korean", "filipina", "thai", "indonesian", "colombian", "brazilian", "cuban", "hawaiian", "polynesian", "italian", "spanish", "mixed race", "eurasian", "afro-latina", "arabian", "persian", "russian", "scandinavian", "latina", "chinese", "vietnamese", "thai-chinese mix", "african"],
-  
-  "fantasy_race": ["human", "elf", "dark elf", "fairy", "fae", "kitsune", "catgirl", "bunny girl", "angel", "vampire", "siren", "mermaid", "demon", "dryad", "celestial", "dragon girl", "oni", "lamia", "harpy", "werewolf", "orc", "devil", "imp", "nymph"],
-  
-  "age": ["young adult", "adult", "mature", "early 20s", "late 20s", "30s", "40s"],
-  
-  "eye_color": ["blue eyes", "green eyes", "brown eyes", "hazel eyes", "grey eyes", "amber eyes", "heterochromia", "crimson eyes", "golden eyes", "violet eyes", "glowing eyes"],
-  
+  ],
+
+  "hair_style": [
+    "beach waves soft natural volume",
+    "wet hair slick glossy texture",
+    "curly tight defined curls",
+    "long straight smooth flow",
+    "short bob clean sharp cut",
+    "messy bun loose strands",
+    "high ponytail sleek pull",
+    "braided intricate plait",
+    "side braid over shoulder",
+    "twin tails symmetrical",
+    "double buns playful style",
+    "hime cut sharp framing",
+    "wolf cut layered texture",
+    "face-framing braids subtle detail",
+    "bedhead tousled natural mess",
+    "wild messy mane untamed",
+    "ponytail casual pull",
+    "loose waves soft volume",
+    "tangled hair chaotic strands",
+    "sweat-damp hair realistic strands"
+  ],
+
+  "ethnicity": [
+    "caucasian",
+    "japanese",
+    "korean",
+    "filipina",
+    "thai",
+    "indonesian",
+    "colombian",
+    "brazilian",
+    "cuban",
+    "hawaiian",
+    "polynesian",
+    "italian",
+    "spanish",
+    "mixed race",
+    "eurasian",
+    "afro-latina",
+    "arabian",
+    "persian",
+    "russian",
+    "scandinavian",
+    "latina",
+    "chinese",
+    "vietnamese",
+    "thai-chinese mix",
+    "african"
+  ],
+
+  "fantasy_race": [
+    "human",
+    "elf with sharp ears",
+    "dark elf shadow aesthetic",
+    "fairy with delicate wings",
+    "fae ethereal presence",
+    "kitsune with fox ears and tail",
+    "catgirl with cat ears and tail",
+    "bunny girl with long ears",
+    "angel with white wings",
+    "vampire pale skin fangs",
+    "siren aquatic allure",
+    "mermaid with scales and tail",
+    "demon with horns",
+    "dryad nature-bound",
+    "celestial glowing aura",
+    "dragon girl with scales",
+    "oni with horns",
+    "lamia serpent lower body",
+    "harpy feathered wings",
+    "nymph natural beauty"
+  ],
+
+  "age": [
+    "young adult",
+    "adult",
+    "early 20s",
+    "late 20s",
+    "30s",
+    "40s"
+  ],
+
+  "eye_color": [
+    "blue eyes clear tone",
+    "green eyes vivid",
+    "brown eyes deep",
+    "hazel eyes mixed tones",
+    "grey eyes cool tone",
+    "amber eyes warm glow",
+    "heterochromia dual colors",
+    "crimson eyes intense",
+    "golden eyes luminous",
+    "violet eyes rare tone"
+   
+  ],
+
   "pose": [
-    "standing relaxed",
-    "leaning forward slightly",
-    "arms up stretch",
-    "hands on hips",
-    "kneeling pose",
-    "sitting casually",
-    "looking over shoulder",
-    "lying on back relaxed",
-    "crouching pose",
-    "standing side view",
-    "hands behind head",
-    "bending slightly forward",
-    "sitting with legs crossed",
-    "standing with one leg raised",
-    "against wall pose"
+    "standing relaxed natural posture",
+    "leaning forward slightly engaging stance",
+    "arms up stretch elongated body",
+    "hands on hips confident stance",
+    "kneeling pose balanced posture",
+    "sitting casually relaxed",
+    "looking over shoulder subtle twist",
+    "lying on back relaxed pose",
+    "crouching pose stable balance",
+    "standing side view clean silhouette",
+    "hands behind head open posture",
+    "bending slightly forward dynamic angle",
+    "sitting with legs crossed composed",
+    "standing with one leg raised dynamic",
+    "against wall pose relaxed lean"
   ],
-  
-  "expression": ["smiling", "sultry", "seductive", "smoldering", "provocative", "teasing", "flirtatious", "desirous", "serious", "playful", "confident", "dreamy", "alluring", "innocent", "shy smile", "biting lip", "focused gaze", "soft smile", "intense look"],
-  
-  "makeup": ["natural makeup", "bold makeup", "glossy lips", "smoky eyes", "glittering eyeshadow", "sultry makeup", "wet-look makeup", "satin lips", "dewy skin", "soft glam", "rosy cheeks", "heavy nose blush", "faux freckles", "graphic eyeliner", "under-eye stamps"],
-  
-  "accessory": ["necklace", "earrings", "choker", "bracelet", "lace gloves", "thigh-high stockings", "garters", "ribbon", "body chain", "delicate cuffs", "anklet", "cat ears", "bunny ears", "flower crown", "scrunchie", "seashell necklace", "oversized headphones", "spiked choker", "layered silver chains", "butterfly hair clips", "belt", "scarf"],
-  
-  "camera_angle": ["close-up portrait", "three-quarter shot", "full body shot", "low angle shot", "overhead shot", "mid shot", "cowboy shot", "from behind", "POV angle", "looking up angle", "top-down angle"],
-  
-  "preset": ["gravure", "editorial", "boudoir", "retro", "cinematic", "dreamlike", "sensual", "seductive", "kawaii", "tropical", "fashion", "lifestyle"],
-  
-  "style_adjective": ["glossy", "alluring", "magnetic", "dreamy", "seductive", "sultry", "provocative", "luminous", "glamorous", "luxurious", "cute", "sweet", "bold", "elegant"],
-  
-  "creative_twist": ["mysterious", "ethereal", "dreamlike haze", "vintage glamour", "surreal ambiance", "playful energy", "soft focus romance", "sun-kissed glow", "tropical paradise", "golden hour warmth"],
-  
-  "vibe": ["modern", "90s", "vintage", "boudoir", "kawaii", "soft pastel", "summer vacation", "pop-idol", "innocent", "romantic", "tropical resort", "island getaway"],
-  
-  "setting": ["led light studio", "tropical beach", "cruise ship poolside", "rooftop bar", "balcony", "garden", "hotel room", "futuristic terrace", "indoor set", "seaside porch", "cozy bedroom", "living room", "velvet bed", "luxury sofa", "tatami room", "onsen", "luxury resort", "tropical villa", "penthouse", "studio apartment"],
-  
-  "background_mood": ["soft light", "stormy sky", "golden hour", "magazine glow", "warm cinematic lighting", "moody evening light", "gentle haze", "bright morning light", "ocean breeze", "neon lights", "candlelit"],
-  
-  "prop": ["chair", "bed with silk sheets", "large mirror", "pillow", "rose petals", "champagne glass", "wine glass", "tropical cocktail", "high heels", "pearl necklace", "sheer curtains", "book", "camera", "flowers"],
-  
-  "focus": ["face focus", "upper body focus", "cleavage focus", "full body focus", "portrait focus", "medium shot", "close-up", "low angle emphasizing silhouette", "side profile"],
-  
+
+
+    "pose_x": [
+    "hugging",
+    "kissing",
+    "making out",
+    "neck kiss",
+    "back hug",
+    "holding hands",
+    "cuddling",
+    "spooning",
+    "forehead kiss",
+    "arm around waist",
+    "arm around shoulder",
+    "hand on cheek",
+    "hand on waist",
+    "lifted in arms",
+    "head on shoulder",
+    "whispering in ear",
+    "passionate embrace",
+    "tongue kiss",
+    "lip bite",
+    "cheek kiss",
+    "nuzzling",
+    "intertwined fingers",
+    "pressing bodies together",
+    "pressing against wall",
+    "slow dance pose",
+    "dip kiss",
+    "hand on butt",
+    "grinding",
+    "body-to-body contact"
+  ],
+
+  "expression": [
+    "smiling soft natural expression",
+    "sultry half-lidded gaze",
+    "seductive direct eye contact",
+    "smoldering intense look",
+    "provocative teasing expression",
+    "teasing playful smirk",
+    "flirtatious engaging gaze",
+    "desirous longing look",
+    "serious composed face",
+    "playful lighthearted smile",
+    "confident relaxed expression",
+    "dreamy distant gaze",
+    "alluring captivating look",
+    "innocent soft eyes",
+    "shy smile gentle expression",
+    "biting lip suggestive",
+    "focused gaze intense",
+    "soft smile subtle warmth",
+    "intense look piercing eyes"
+  ],
+
+  "makeup": [
+    "natural makeup clean skin",
+    "bold makeup high contrast",
+    "glossy lips reflective shine",
+    "smoky eyes dramatic depth",
+    "glittering eyeshadow sparkle",
+    "sultry makeup deep tones",
+    "wet-look makeup reflective skin",
+    "satin lips smooth finish",
+    "dewy skin hydrated glow",
+    "soft glam balanced tones",
+    "rosy cheeks soft blush",
+    "heavy nose blush stylized",
+    "faux freckles natural detail",
+    "graphic eyeliner sharp lines",
+    "under-eye stamps stylized"
+  ],
+
+  "accessory": [
+    "necklace subtle detail",
+    "earrings minimal shine",
+    "choker tight fit",
+    "bracelet delicate",
+    "lace gloves soft fabric",
+    "thigh-high stockings smooth texture",
+    "garters structured detail",
+    "ribbon accent",
+    "body chain metallic highlight",
+    "delicate cuffs subtle metal",
+    "anklet small detail",
+    "cat ears accessory",
+    "bunny ears accessory",
+    "flower crown natural",
+    "scrunchie casual detail",
+    "seashell necklace beach theme",
+    "oversized headphones modern",
+    "spiked choker edgy",
+    "layered silver chains",
+    "butterfly hair clips",
+    "belt structured detail",
+    "scarf soft fabric",
+    "ushanka fur hat",
+    "kokoshnik headdress",
+    "fur-trimmed gloves",
+    "fur collar accent",
+    "fur cuffs",
+    "winter boots",
+    "tall fur boots"
+  ],
+
+  "camera_angle": [
+    "close-up portrait tight framing",
+    "three-quarter shot natural perspective",
+    "full body shot centered composition",
+    "low angle shot dramatic perspective",
+    "overhead shot top-down view",
+    "mid shot balanced framing",
+    "cowboy shot mid-thigh framing",
+    "from behind over-shoulder view",
+    "POV angle immersive perspective",
+    "looking up angle dynamic view",
+    "top-down angle vertical composition"
+  ],
+
+  "preset": [
+    "gravure",
+    "editorial fashion style",
+    "boudoir intimate aesthetic",
+    "retro vintage tone",
+    "cinematic film look",
+    "dreamlike soft haze",
+    "sensual mood",
+    "seductive aesthetic",
+    "kawaii stylized",
+    "tropical lifestyle",
+    "fashion photography",
+    "lifestyle natural"
+  ],
+
+  "style_adjective": [
+    "glossy finish",
+    "alluring presence",
+    "magnetic energy",
+    "dreamy softness",
+    "seductive tone",
+    "sultry mood",
+    "provocative edge",
+    "luminous glow",
+    "glamorous aesthetic",
+    "luxurious feel",
+    "cute appeal",
+    "sweet tone",
+    "bold contrast",
+    "elegant refinement"
+  ],
+
+  "creative_twist": [
+    "mysterious atmosphere",
+    "ethereal glow",
+    "dreamlike haze",
+    "vintage glamour tone",
+    "surreal ambiance",
+    "playful energy",
+    "soft focus romance",
+    "sun-kissed glow",
+    "tropical paradise feel",
+    "golden hour warmth",
+    "neon afterglow",
+    "editorial polish",
+    "moonlit enchantment"
+  ],
+
+  "vibe": [
+    "modern",
+    "90s aesthetic",
+    "vintage tone",
+    "boudoir mood",
+    "kawaii style",
+    "soft pastel palette",
+    "summer vacation vibe",
+    "pop-idol energy",
+    "innocent tone",
+    "romantic mood",
+    "tropical resort",
+    "island getaway",
+    "neon nightlife",
+    "editorial fashion",
+    "ethereal fantasy"
+  ],
+
+  "setting": [
+    "led light studio with glossy reflective floor",
+    "tropical beach with open horizon and palm shadows",
+    "cruise ship poolside with bright deck lights",
+    "rooftop bar with city skyline bokeh",
+    "urban balcony with soft evening light",
+    "lush garden with layered greenery",
+    "modern hotel room with polished interior",
+    "futuristic terrace with clean white architecture",
+    "indoor studio set with minimal backdrop",
+    "seaside porch with ocean breeze and sheer drapes",
+    "cozy bedroom with soft lamplight",
+    "warm living room with plush seating",
+    "velvet bed with rich fabric folds",
+    "luxury sofa corner with elegant decor",
+    "traditional tatami room with paper screens",
+    "onsen with steam haze and warm lantern light",
+    "luxury resort with bright open-air lounge",
+    "tropical villa with airy open space",
+    "penthouse with panoramic skyline view",
+    "minimal studio apartment with clean lines",
+    "enchanted winter forest with snow-laden pines",
+    "neon alley with rain-slick pavement",
+    "editorial photo studio with seamless backdrop",
+    "moonlit ruins with glowing mist",
+    "private candlelit suite with velvet drapes",
+    "beach club cabana with sunlit curtains"
+  ],
+
+  "background_mood": [
+    "soft light diffused glow",
+    "stormy sky dramatic clouds",
+    "golden hour warm rim light",
+    "magazine glow polished lighting",
+    "warm cinematic lighting",
+    "moody evening light deep shadows",
+    "gentle haze soft diffusion",
+    "bright morning light crisp",
+    "ocean breeze airy feel",
+    "neon lights vibrant glow",
+    "candlelit warm flicker",
+    "moonlit winter glow",
+    "soft snowfall shimmer",
+    "frosted twilight haze",
+    "rainy neon reflections",
+    "editorial flash glow",
+    "candlelit velvet shadows",
+    "moonlit magical haze"
+  ],
+
+  "prop": [
+    "chair simple prop",
+    "pillow soft fabric",
+    "champagne glass elegant",
+    "wine glass classic",
+    "ice cream cone",
+    "tropical cocktail colorful",
+    "high heels stylish",
+    "pearl necklace luxury",
+    "book casual detail",
+    "camera meta element"
+  ],
+
+  "background_prop": [
+    "bed with silk sheets",
+    "large mirror reflective surface",
+    "rose petals scattered",
+    "sheer curtains soft light",
+    "flowers natural",
+    "snow-laden pine branches",
+    "glittering snowdrifts",
+    "frosted tree trunks",
+    "neon signage in the distance",
+    "studio light stands and backdrop rolls",
+    "candle clusters on side tables",
+    "glowing lanterns among trees"
+  ],
+
+  "focus": [
+    "face focus sharp detail",
+    "upper body focus framing",
+    "cleavage focus composition",
+    "full body focus clarity",
+    "portrait focus depth",
+    "medium shot balanced",
+    "close-up tight crop",
+    "low angle emphasizing silhouette",
+    "side profile clean outline"
+  ],
+
   "outfit": [
-    "bikini",
-    "micro bikini",
-    "one-piece swimsuit",
-    "lingerie",
-    "lace bodysuit",
-    "sheer dress",
-    "tube top",
-    "cropped tank top",
-    "short shorts",
-    "maid outfit",
-    "sailor uniform",
-    "yukata",
-    "oversized sweater",
-    "casual wear",
-    "evening dress",
-    "latex catsuit",
-    "nurse outfit",
-    "cheerleader outfit"
+    "bikini minimal fabric",
+    "micro bikini revealing cut",
+    "one-piece swimsuit sleek fit",
+    "lingerie lace detail",
+    "lace bodysuit form-fitting",
+    "sheer dress translucent fabric",
+    "tube top minimal coverage",
+    "cropped tank top casual",
+    "short shorts fitted",
+    "maid outfit stylized costume",
+    "sailor uniform classic anime style",
+    "yukata traditional fabric",
+    "oversized sweater loose fit",
+    "casual wear everyday clothing",
+    "evening dress elegant silhouette",
+    "latex catsuit glossy tight fit",
+    "nurse outfit stylized uniform",
+    "cheerleader outfit sporty",
+    "azure blue santa outfit with white fur and ushanka hat",
+    "shuba fur coat luxurious winter style",
+    "siberian winter outfit with fur trim",
+    "snegurochka costume blue and white fur trim",
+    "snow maiden coat fitted festive style",
+    "winter coat with ushanka hat",
+    "winter outfit with kokoshnik headdress",
+    "blue fur-trimmed coat with tall boots",
+    "white fur-trimmed holiday coat"
   ],
-  
-  "atmosphere": ["soft sunlight", "studio lighting", "golden hour", "warm cinematic light", "moody evening glow", "soft backlight", "gentle haze", "tropical heat", "velvet atmosphere", "intimate lighting"],
-  
-  "body_type": ["slim", "skinny", "athletic", "sporty", "toned", "curvy", "voluptuous", "petite", "busty", "hourglass", "tall", "average build"],
-  
-  "camera_gear": ["shot on 35mm film", "Kodak Portra 400", "Polaroid photo", "85mm lens", "Sony A7R IV", "vintage Leica", "shot on iPhone", "Canon R5", "raw photo", "high detail 8k"],
-  
-  "chest_size": ["small", "medium", "large", "full", "busty"]
+
+  "atmosphere": [
+    "soft sunlight diffused",
+    "studio lighting controlled",
+    "golden hour warm glow",
+    "warm cinematic light",
+    "moody evening glow",
+    "soft backlight silhouette",
+    "gentle haze diffusion",
+    "tropical heat shimmer",
+    "velvet atmosphere rich tone",
+    "intimate lighting low key",
+    "crisp winter air",
+    "frosty mist",
+    "snowy hush",
+    "humid summer glow",
+    "electric night air",
+    "polished studio clarity",
+    "romantic candlelit haze",
+    "enchanted moonlit mist"
+  ],
+
+  "body_type": [
+    "slim",
+    "skinny",
+    "athletic",
+    "sporty",
+    "toned",
+    "curvy",
+    "voluptuous",
+    "petite",
+    "busty",
+    "hourglass",
+    "tall",
+    "average build"
+  ],
+
+  "camera_gear": [
+    "shot on 35mm film grain",
+    "Kodak Portra 400 color profile",
+   
+    "85mm lens portrait compression",
+    "Sony A7R IV high resolution",
+    "vintage Leica character",
+    "shot on iPhone natural capture",
+    "Canon R5 sharp detail",
+    "raw photo high dynamic range",
+    "high detail 8k"
+  ],
+
+  "chest_size": [
+    "small",
+    "medium",
+    "large",
+    "full",
+    "busty"
+  ],
+
+  "_composer_rules": {
+    "interaction_scene_families": {
+      "carry": ["lifted", "carry", "arms"],
+      "wall": ["wall"],
+      "seated": ["spoon", "lap", "seated", "sitting"],
+      "dance": ["dance", "dip", "turn"],
+      "kiss": ["kiss", "nuzzl", "cheek", "forehead", "tongue", "lip bite"],
+      "embrace": ["hug", "embrace", "cuddl", "waist", "shoulder", "hands", "fingers", "bodies together"]
+    },
+    "scene_compatible_pose_hints": {
+      "carry": ["one leg raised", "arms up", "leaning forward", "against wall", "standing"],
+      "wall": ["against wall", "one leg raised", "looking over shoulder", "standing side view", "hands on hips"],
+      "seated": ["sitting", "kneeling", "lying on back", "legs crossed"],
+      "dance": ["standing", "one leg raised", "hands on hips", "looking over shoulder"],
+      "kiss": ["standing", "leaning forward", "against wall", "looking over shoulder", "hands behind head"],
+      "embrace": ["standing", "leaning forward", "kneeling", "sitting", "against wall"]
+    },
+    "complexity_level_terms": {
+      "high": ["lifted", "grinding", "dip", "pressing", "spoon", "dance"],
+      "medium": ["kiss", "embrace", "cuddl", "hug", "waist", "shoulder"]
+    },
+    "extreme_focus_terms": ["close-up", "tight crop", "cleavage focus", "side profile"],
+    "extreme_camera_terms": ["close-up", "overhead", "top-down", "pov"],
+    "accessory_drop_terms": ["stockings", "garters", "gloves", "headphones", "scarf"],
+    "setting_drop_terms": ["studio apartment", "indoor set", "balcony"],
+    "setting_restricted_scenes": ["carry", "dance"],
+    "camera_downgrade": "mid shot",
+    "detail_budgets": {
+      "minimal": { "portrait": 4, "pose": 1, "scene": 2, "style": 1 },
+      "balanced": { "portrait": 6, "pose": 2, "scene": 4, "style": 2 },
+      "rich": { "portrait": 8, "pose": 3, "scene": 5, "style": 3 }
+    },
+    "category_weights": {
+      "subject": 1.2,
+      "outfit": 1.12,
+      "pose": 1.08,
+      "interaction": 1.08,
+      "style": 1.0,
+      "scene": 1.0
+    },
+    "complexity_thresholds": {
+      "balanced": 8,
+      "high": 11
+    }
+  },
+
+  "_tag_aliases": {
+    "hair_color": {
+      "blond": "blonde",
+      "white hair": "pure white clean tone"
+    },
+    "accessory": {
+      "fur hat": "ushanka fur hat",
+      "snow maiden crown": "kokoshnik headdress"
+    },
+    "outfit": {
+      "snow maiden outfit": "snegurochka costume blue and white fur trim",
+      "russian fur coat look": "shuba fur coat luxurious winter style",
+      "siberian winter style": "siberian winter outfit with fur trim"
+    },
+    "interaction": {
+      "embracing": "passionate embrace",
+      "make out": "making out"
+    }
+  },
+
+  "_smart_preset_rules": {
+    "winter fashion": {
+      "preferred_terms": {
+        "hair_color": ["silver", "platinum", "white", "ash blonde"],
+        "accessory": ["ushanka", "fur", "winter boots", "kokoshnik"]
+      },
+      "blocked_terms": {
+        "setting": ["tropical", "beach", "poolside", "seaside"],
+        "background_mood": ["ocean breeze", "golden hour"],
+        "atmosphere": ["tropical heat", "humid summer"],
+        "prop": ["tropical cocktail", "ice cream"]
+      }
+    },
+    "beach glam": {
+      "preferred_terms": {
+        "hair_color": ["blonde", "honey blonde", "golden blonde"],
+        "hair_style": ["beach waves", "wet hair", "loose waves"],
+        "accessory": ["seashell", "flower crown"]
+      },
+      "blocked_terms": {
+        "setting": ["winter", "dungeon", "tatami"],
+        "accessory": ["ushanka", "kokoshnik", "winter boots"]
+      }
+    },
+    "neon nightlife": {
+      "preferred_terms": {
+        "hair_color": ["black", "blue-black", "deep violet", "red"],
+        "makeup": ["bold makeup", "smoky eyes", "glossy lips", "wet-look"],
+        "accessory": ["choker", "layered silver chains", "body chain", "spiked choker"]
+      },
+      "blocked_terms": {
+        "setting": ["winter forest", "garden", "beach club", "onsen"],
+        "accessory": ["ushanka", "flower crown"]
+      }
+    },
+    "romantic boudoir": {
+      "preferred_terms": {
+        "hair_style": ["loose waves", "bedhead", "wet hair"],
+        "accessory": ["lace gloves", "garters", "body chain", "earrings"]
+      },
+      "blocked_terms": {
+        "setting": ["beach", "winter forest", "strip club"],
+        "accessory": ["ushanka", "winter boots", "cat ears", "bunny ears"]
+      }
+    },
+    "fantasy ethereal": {
+      "preferred_terms": {
+        "hair_color": ["silver", "white", "lavender", "rose gold"],
+        "accessory": ["flower crown", "butterfly hair clips", "kokoshnik"],
+        "creative_twist": ["ethereal", "moonlit enchantment", "dreamlike haze"]
+      },
+      "blocked_terms": {
+        "setting": ["strip club", "dungeon", "poolside"]
+      }
+    },
+    "studio editorial": {
+      "preferred_terms": {
+        "hair_style": ["short bob", "high ponytail", "long straight"],
+        "accessory": ["earrings", "bracelet", "layered silver chains"]
+      },
+      "blocked_terms": {
+        "setting": ["winter forest", "beach", "dungeon", "onsen"],
+        "prop": ["ice cream"]
+      }
+    }
+  },
+
+  "_tag_conflicts": {
+    "kokoshnik headdress": ["ushanka fur hat"],
+    "ushanka fur hat": ["kokoshnik headdress"],
+    "cat ears accessory": ["bunny ears accessory"],
+    "bunny ears accessory": ["cat ears accessory"],
+    "winter boots": ["high heels stylish"],
+    "tall fur boots": ["high heels stylish"]
+  }
 }
