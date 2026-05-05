@@ -27,7 +27,7 @@
   "subject": [
   
    
-    "pornstar",
+
     "celebrity",
     "goddess", 
     "model",
@@ -35,8 +35,34 @@
     "influencer",
     "cosplayer",
     "dancer",
-    "athlete"
+    "athlete",
+    "performer",
+    "streamer",
+    "warrior",
+    "mage",
+    "assassin",
+    "noble",
+    "royalty",
+    "commoner",
+    "student",
+    "office worker",
+    "chef",
+    "artist",
+    "musician",
+    "writer",
+    "explorer",
+    "adventurer",
+    "scientist",
+    "engineer",
+    "doctor",
+    "nurse",
+    "teacher"
   
+  ],
+
+  "gender": [
+    "male",
+    "female"
   ],
 
   "hair_style": [
@@ -185,6 +211,63 @@
     "hand on butt",
     "grinding",
     "body-to-body contact"
+  ],
+
+  "interaction": [
+    "hugging",
+    "kissing",
+    "making out",
+    "neck kiss",
+    "back hug",
+    "holding hands",
+    "cuddling",
+    "spooning",
+    "forehead kiss",
+    "arm around waist",
+    "arm around shoulder",
+    "hand on cheek",
+    "hand on waist",
+    "lifted in arms",
+    "head on shoulder",
+    "whispering in ear",
+    "passionate embrace",
+    "nuzzling",
+    "intertwined fingers",
+    "pressing bodies together",
+    "pressing against wall",
+    "slow dance pose",
+    "dip kiss",
+    "hand on butt",
+    "body-to-body contact",
+    "skateboarding together",
+    "cooking together", 
+    "dancing together",
+    "watching movie together",  
+    "stargazing together",
+    "taking selfie together",
+    "shopping together",
+    "traveling together",
+    "working out together",
+    "attending event together",
+    "celebrating together",
+    "relaxing together",
+    "playing game together",
+    "exploring city together",
+    "having picnic together", 
+    "going on date together",
+    "cuddling on couch together",
+    "biking together",
+    "hiking together",
+    "kayaking together",
+    "dining together",
+    "drinking together",
+    "sunbathing together",
+    "swimming together",
+    "skiing together",
+    "snowboarding together",
+    "ice skating together",
+    "attending concert together"
+
   ],
 
   "expression": [
@@ -390,6 +473,7 @@
   ],
 
   "prop": [
+        "banana",
     "chair simple prop",
     "pillow soft fabric",
     "champagne glass elegant",
@@ -654,6 +738,7 @@
     "ushanka fur hat": ["kokoshnik headdress"],
     "cat ears accessory": ["bunny ears accessory"],
     "bunny ears accessory": ["cat ears accessory"],
+    "high heels stylish": ["winter boots", "tall fur boots"],
     "winter boots": ["high heels stylish"],
     "tall fur boots": ["high heels stylish"]
   }
