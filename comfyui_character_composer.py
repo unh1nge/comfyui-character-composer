@@ -51,6 +51,12 @@ def _cleanup_removed_prompt_text(prompt: str) -> str:
         cleaned,
         flags=re.IGNORECASE,
     )
+    cleaned = re.sub(
+        r"(^|\s)(?:in|on|at|by|from|to|into|onto|inside|outside|near|around)(?=\s*(?:,|$))",
+        r"\1",
+        cleaned,
+        flags=re.IGNORECASE,
+    )
     cleaned = re.sub(r"\s+", " ", cleaned).strip(" ,")
     return cleaned
 
@@ -65,6 +71,62 @@ def _remove_tag_phrase(prompt: str, tag: str) -> str:
     )
     cleaned = re.sub(r"\s+", " ", cleaned).strip()
     return cleaned
+
+
+def _infer_gender_from_prompt(prompt: str) -> str | None:
+    lowered = prompt.lower()
+    female_markers = ("woman", "women", "girl", "girls", "female", "lady", "ladies")
+    male_markers = ("man", "men", "boy", "boys", "male", "gentleman", "gentlemen")
+    has_female = any(re.search(rf"\b{re.escape(marker)}\b", lowered) for marker in female_markers)
+    has_male = any(re.search(rf"\b{re.escape(marker)}\b", lowered) for marker in male_markers)
+    if has_female and not has_male:
+        return "female"
+    if has_male and not has_female:
+        return "male"
+    return None
+
+
+def _remove_selected_terms_from_user_text(user_text: str, final_choices: dict, extracted: dict, tag_aliases: dict, used_keys: set[str]) -> str:
+    cleaned = user_text
+    for key in BLEED_STRIP_KEYS:
+        if key in used_keys:
+            continue
+        final_value = final_choices.get(key)
+        extracted_value = extracted.get(key)
+        if not final_value or not extracted_value:
+            continue
+        if str(final_value).lower() != str(extracted_value).lower():
+            continue
+        terms_to_remove = [str(final_value)]
+        aliases_for_key = tag_aliases.get(key, {}) if isinstance(tag_aliases.get(key), dict) else {}
+        for alias, target in aliases_for_key.items():
+            if str(target).lower() == str(final_value).lower():
+                terms_to_remove.append(str(alias))
+        for term in terms_to_remove:
+            cleaned = _remove_tag_phrase(cleaned, term)
+    return _cleanup_removed_prompt_text(cleaned)
+
+
+def _normalize_fragment_for_compare(fragment: str) -> str:
+    lowered = fragment.lower().strip()
+    unweighted = re.sub(r"\(([^()]+?):\s*\d+(?:\.\d+)?\)", r"\1", lowered)
+    unweighted = re.sub(r"[^a-z0-9\s]", " ", unweighted)
+    return re.sub(r"\s+", " ", unweighted).strip()
+
+
+def _dedupe_prompt_fragments(prompt: str) -> str:
+    fragments = [part.strip() for part in prompt.split(",") if part.strip()]
+    kept: list[str] = []
+    norms: list[str] = []
+    for fragment in fragments:
+        norm = _normalize_fragment_for_compare(fragment)
+        if not norm:
+            continue
+        if any(norm == existing or norm in existing or existing in norm for existing in norms):
+            continue
+        kept.append(fragment)
+        norms.append(norm)
+    return ", ".join(kept)
 
 # The UI_LAYOUT is the ONLY place where keys are defined. 
 # This tells the script which dropdowns to create.
@@ -92,6 +154,39 @@ LOOK_KEYS = [
     "outfit",
     "fantasy_race",
     "ethnicity",
+]
+
+
+def _randomize_look_traits(final_choices: dict, tag_data: dict, rng: random.Random) -> dict:
+    randomized = dict(final_choices)
+    for key in LOOK_KEYS:
+        randomized[key] = _pick_random_choice(rng, tag_data.get(key, []))
+    return randomized
+
+BLEED_STRIP_KEYS = [
+    "body_type",
+    "chest_size",
+    "age",
+    "ethnicity",
+    "fantasy_race",
+    "hair_color",
+    "hair_style",
+    "eye_color",
+    "expression",
+    "makeup",
+    "outfit",
+    "focus",
+    "camera_angle",
+    "camera_gear",
+    "vibe",
+    "style_adjective",
+    "creative_twist",
+    "setting",
+    "background_mood",
+    "atmosphere",
+    "accessory",
+    "prop",
+    "background_prop",
 ]
 
 GENDER_OPTIONS = ["male", "female"]
@@ -648,7 +743,7 @@ def _apply_mode_biases(final_choices: dict, tag_data: dict, smart_preset_rules: 
             if fill_auto_traits and key in biased:
                 biased[key] = None
 
-    if style_strength == "subtle" and not biased.get("creative_twist"):
+    if style_strength == "subtle" and biased.get("creative_twist"):
         biased["creative_twist"] = None
 
     return biased
@@ -662,13 +757,17 @@ def _apply_tag_conflicts(final_choices: dict, tag_conflicts: dict[str, list[str]
     selected_items.sort(key=lambda item: priority_map.get(item[0], 999))
 
     kept_values: dict[str, str] = {}
+    kept_values_lower: set[str] = set()
     for key, value in selected_items:
-        conflicts = tag_conflicts.get(value, [])
-        if any(conflict in kept_values.values() for conflict in conflicts):
+        value_text = str(value)
+        conflicts = tag_conflicts.get(value_text, []) or tag_conflicts.get(value_text.lower(), [])
+        conflict_set = {str(conflict).lower() for conflict in conflicts}
+        if any(existing in conflict_set for existing in kept_values_lower):
             sanitized[key] = None
             dropped_traits.append(f"{key}: {value} (conflicts with higher-priority selection)")
             continue
-        kept_values[key] = value
+        kept_values[key] = value_text
+        kept_values_lower.add(value_text.lower())
     return sanitized
 
 
@@ -892,6 +991,7 @@ class ComfyUICharacterComposer:
                 "style_strength": ("COMBO", {"default": "balanced", "options": STYLE_STRENGTH_OPTIONS, "tooltip": "Controls how strongly vibe, style, and scene flavoring are applied."}),
                 "fill_auto_traits": ("BOOLEAN", {"default": False, "advanced": True}),
                 "reset_overrides": ("BOOLEAN", {"default": False, "tooltip": "Force all trait override controls back to auto mode for this generation.", "advanced": True}),
+                "randomize_look_keep_position": ("BOOLEAN", {"default": False, "tooltip": "Randomize look traits (subject/body/hair/eyes/outfit/etc.) while keeping pose and composition controls unchanged.", "advanced": True}),
                 "bypass_generator": ("BOOLEAN", {"default": False, "advanced": True}),
                 "preserve_input_position": ("BOOLEAN", {"default": False, "tooltip": "If True and a reference image is supplied, add hints to preserve subject positions and composition from the input image.", "advanced": True}),
                 "preserve_character_look": ("BOOLEAN", {"default": False, "tooltip": "Strict: prevent changing look-related tags (hair_color, hair_style, eye_color, outfit, makeup, body_type, chest_size, fantasy_race, ethnicity) when a reference image is supplied.", "advanced": True}),
@@ -920,7 +1020,7 @@ class ComfyUICharacterComposer:
             
         return inputs
 
-    def generate(self, input_prompt, seed, extra_modifiers, generation_profile, smart_preset, composition_mode, subject_count, detail_level, style_strength, fill_auto_traits, bypass_generator, preserve_input_position=False, preserve_character_look=False, outfit_mode="auto", tag_file=DEFAULT_TAG_FILE, image1=None, **kwargs):
+    def generate(self, input_prompt, seed, extra_modifiers, generation_profile, smart_preset, composition_mode, subject_count, detail_level, style_strength, fill_auto_traits, randomize_look_keep_position=False, bypass_generator=False, preserve_input_position=False, preserve_character_look=False, outfit_mode="auto", tag_file=DEFAULT_TAG_FILE, image1=None, **kwargs):
         if bypass_generator:
             return (input_prompt.strip(), NEGATIVE_PROMPT_TERMS, "", "Bypass Active", "Bypass mode returned the raw input prompt.", "", "0", "bypassed", image1)
 
@@ -964,6 +1064,10 @@ class ComfyUICharacterComposer:
 
         # 1. Selection Logic
         extracted = {k: _search_keyword(prompt_clean, tag_data[k], tag_aliases.get(k)) for k in MASTER_KEYS}
+        if not extracted.get("gender"):
+            inferred_gender = _infer_gender_from_prompt(prompt_clean)
+            if inferred_gender:
+                extracted["gender"] = inferred_gender
         final_choices = {}
         for key in MASTER_KEYS:
             ui_val = kwargs.get(key, "auto")
@@ -980,6 +1084,11 @@ class ComfyUICharacterComposer:
                     final_choices[key] = value if value in source_tag_data.get(key, []) else None
                 else:
                     final_choices[key] = ui_val if ui_val in tag_data.get(key, []) or key == "gender" else None
+
+        # One-click randomizer that changes visual identity while preserving
+        # pose/composition-related selections already present in final_choices.
+        if randomize_look_keep_position:
+            final_choices = _randomize_look_traits(final_choices, tag_data, rng)
 
         # Prepare strict look-preservation if requested and a reference image is supplied.
         locked_look_values: dict[str, str | None] = {}
@@ -1129,6 +1238,7 @@ class ComfyUICharacterComposer:
 
         user_text = re.sub(r"\{.*?\}", "", user_text)
         user_text = _remove_futanari_terms(user_text)
+        user_text = _remove_selected_terms_from_user_text(user_text, final_choices, extracted, tag_aliases, used)
 
         # 4. Sentence Construction
         # Build a strong subject anchor first so the model gets the main concept early.
@@ -1153,7 +1263,7 @@ class ComfyUICharacterComposer:
             subject_anchor = "1 woman"
         else:
             subject_anchor = "1 person"
-        if not subject_traits:
+        if not subject_traits and not gender_value:
             subject_traits.append("model")
 
         hair_color = final_choices.get("hair_color") if "hair_color" not in used else None
@@ -1286,6 +1396,7 @@ class ComfyUICharacterComposer:
         # Cleanup
         final_prompt = re.sub(r"\s+", " ", final_prompt)
         final_prompt = re.sub(r",\s*,", ",", final_prompt).strip(" ,")
+        final_prompt = _dedupe_prompt_fragments(final_prompt)
 
         if chaos_score_value <= 6:
             stability_hint = "low risk"
@@ -1298,6 +1409,7 @@ class ComfyUICharacterComposer:
         why_this_prompt = ", ".join(
             [
                 f"generation_profile={generation_profile}",
+                f"randomize_look_keep_position={bool(randomize_look_keep_position)}",
                 f"preserve_input_position={bool(preserve_input_position)}",
                 f"preserve_character_look={bool(preserve_character_look)}",
                 f"locked_look={locked_look_summary}",
