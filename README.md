@@ -19,7 +19,7 @@ size_categories:
 ---
 # AIO Qwen Workflow
 
-<img src="preview/workflow example.png" width="100%" />
+<img src="preview/Screenshot 2026-05-06 155359.png" width="100%" />
 
 The repository now includes:
 
