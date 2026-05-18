@@ -17,199 +17,347 @@ release_date: 2026-04-30
 size_categories:
 - n<1K
 ---
-# AIO Qwen Workflow
+# ComfyUI Character Composer
 
-<img src="preview/Screenshot 2026-05-06 155359.png" width="100%" />
+**Version:** 2.0 • **Release Date:** 2026-05-18 • **License:** Apache-2.0
 
-The repository now includes:
+Structured, JSON-driven character prompt system for ComfyUI.
 
-# `AIO Comfyui-Character-Composer Qwen Workflow.json`
+Designed for consistent, controllable character generation with Qwen-style workflows, replacing random prompt chaos with a more deterministic composition layer.
 
-A unified all-in-one Qwen workflow designed around Character Composer.
-
-This is no longer just:
-- a custom node
-- a tag helper
-- a prompt formatter
-
-It is effectively a lightweight procedural character-generation system for ComfyUI.
-
-The AIO workflow combines:
-- Qwen image editing
-- text-to-image
-- image-to-image
-- structured prompting
-- character consistency tools
-- composition preservation
-- deterministic randomization
-- scene-aware prompt assembly
-
-inside a single workflow.
-
----
-
-# Why the AIO Workflow Matters
+Spicier companion dataset:
+https://huggingface.co/datasets/unh1nge/comfyui-character-composer
 
 <img src="preview/ComfyUI_01625_.png" width="100%" />
 
-Most ComfyUI workflows eventually become:
-- giant spaghetti graphs
-- impossible to debug
-- difficult to reproduce
-- hard to share
-- overloaded with manual prompt engineering
+## New / Advanced UI & Prompt generation (v2.0)
+- Character creation node now prints the final prompt it generates for easier debugging.
+- Character creation node now accepts up to 3 input images at the same time
 
-The AIO workflow was designed to behave more like:
-- a game character creator
-- a procedural scene builder
-- a controllable generation pipeline
+## New / Advanced toggles (v1.2)
 
-instead of raw prompt chaos.
+- `preserve_input_position` (BOOLEAN, advanced): If True and a reference image is supplied, injects a short preserve-position hint into the prompt (or replace `{preserve_position}` if present).
 
-It was specifically built to:
-- reduce manual prompt rewriting
-- stabilize generations
-- preserve character identity
-- simplify Qwen editing workflows
-- support rapid iteration during game development
+- `preserve_character_look` (BOOLEAN, advanced): Strictly preserve known look traits from UI selections or prompt inference, and from the reference image if supplied. When active, unknown character look traits are no longer auto-filled so the same person identity remains stable. Only traits with actual values are locked so `fill_auto_traits` can still populate non-look fields like pose, setting, and props.
+
+- `outfit_mode` (COMBO): `auto` / `keep` / `random` — keeps or randomizes the `outfit` trait when used with `preserve_character_look` and/or `fill_auto_traits`.
 
 ---
 
-# Supported Modes
+## Recommended Stack
 
-## Text-to-Image
+- Model: `Qwen-Image-Edit-Rapid-AIO`
+- Workflow: `QWEN AIO CC 3X WORKFLOW.json`
+- Node: `ComfyUI Character Composer`
 
-Leave `image1` disconnected.
-
----
-
-## Image-to-Image
-
-Connect a source image into `image1`.
-
----
-
-## Character Preservation
-
-Use:
-- `preserve_character_look`
-- `outfit_mode`
-- deterministic seeds
-
-to maintain identity consistency across generations.
+This setup combines:
+- Qwen spatial reasoning
+- structured prompt composition
+- controllable character generation
 
 ---
 
-## Scene Preservation
 
-Use:
-- `preserve_input_position`
 
-to preserve approximate:
-- subject placement
-- composition structure
-- scene layout
+### Text-to-image
+
+Use `QWEN AIO CC 3X WORKFLOW.json` with the image sockets left disconnected or just bypass them for normal prompt-driven generation.
+
+<img src="preview/text-to-image.png" width="100%" />
+
+### 3-image image-to-image
+
+Use `QWEN AIO CC 3X WORKFLOW.json` when you want to feed three reference images into the Qwen image-edit encoder.
+
+<img src="preview/3-image-to-image.png" width="100%" />
 
 ---
 
-# Main Workflow Advantages
+## Why This Node Exists
+
+Most character-generation pipelines:
+- rely on random prompts
+- produce inconsistent characters
+- become hard to reproduce
+- break down when too many pose, style, and scene tags pile up
+
+This node provides:
+- structured trait composition
+- seed-based deterministic behavior
+- prompt cleanup and conflict handling
+- JSON-driven customization without rewriting Python
+
+---
+
+## Current Features
+
+- JSON-driven trait libraries via `tags.json` and `tags_NSFW.json`
+- Selectable tag source file with merged UI dropdowns
+- Smart prompt assembly with weighted core traits
+- Wildcard support such as `{hair_color}` or `{interaction}`
+- Backward compatibility for legacy `{pose_x}` placeholders
+- Workflow-level smart presets
+- Composition-aware defaults and conflict handling
+- Scene sanitization for unstable interaction / pose / camera combinations
+- Complexity guard that trims low-priority details when prompts get overloaded
+- Alias matching from JSON, such as `blond -> blonde`
+- Tag conflict rules from JSON, such as `kokoshnik` vs `ushanka`
+- Detail budgets and category weights from JSON
+- A compact output surface: final prompt, negative prompt, and image passthroughs
 
 <img src="preview/ComfyUI_01543_.png" width="100%" />
 
-## Unified Pipeline
+---
 
-No separate:
-- txt2img workflow
-- img2img workflow
-- preservation workflow
+## Main Controls
 
-Everything exists in one graph.
+### Core inputs
+
+- `input_prompt`
+- `seed`
+- `tag_file`
+- `extra_modifiers`
+
+### High-level steering
+
+- `smart_preset`
+  - `none`
+  - `safe portrait`
+  - `high detail character`
+  - `winter fashion`
+  - `paired cinematic`
+  - `simple anatomy-safe`
+
+ - `composition_mode`
+  - `auto`
+  - `solo portrait`
+  - `fashion`
+  - `paired`
+  - `close-up`
+  - `full body`
+  - `winter`
+  - `fantasy`
+
+ - `subject_count`
+  - `auto` (recommended) — node will infer 1/2/3/4/group from prompt/interaction/pose
+  - `1`
+  - `2`
+  - `3`
+  - `4`
+  - `group`
+
+- `detail_level`
+  - `minimal`
+  - `balanced`
+  - `rich`
+
+- `style_strength`
+  - `subtle`
+  - `balanced`
+  - `strong`
+
+
+
+### Utility toggles
+
+- `fill_auto_traits`
+  - fills unresolved `auto` fields from the active tag file
+
+- `reset_overrides`
+  - pushes trait dropdowns back to `auto` for the current generation
+
+- `bypass_generator`
+  - returns the raw `input_prompt` unchanged
+
+### Trait sections
+
+The node UI is grouped into:
+- `CORE CREATIVE`
+- `CHARACTER LOOK`
+- `CAMERA & FRAMING`
+- `STYLE & SCENE`
+- `OPTIONAL EXTRAS`
+
+Notable rename:
+- `pose_x` is now `interaction`
 
 ---
 
-## Cleaner UX
+## Example
 
-The workflow behaves closer to:
-- a visual character creator
-- a scene editor
-- a procedural composition system
+Input:
 
-than traditional prompt engineering.
+```text
+{hair_color} {hair_style} woman in {setting}
+```
 
----
+Possible output:
 
-## Structured Generation
-
-The workflow automatically manages:
-- prompt cleanup
-- composition weighting
-- trait balancing
-- conflict resolution
-- complexity reduction
-- interaction stability
-
-before the prompt even reaches Qwen.
+```text
+gravure, photorealistic, soft lighting, 8k, (1woman:1.20), model blonde beach waves hair, shot on 35mm film grain, modern portrait, wearing bikini minimal fabric, shot as a three-quarter shot natural perspective, at the tropical beach open horizon
+```
 
 ---
 
-## Better Iteration Speed
+## Installation
 
-The workflow was built for:
-- rapid testing
-- asset iteration
-- game prototyping
-- character experimentation
+1. Clone into your `ComfyUI/custom_nodes` directory:
 
-without rewriting prompts every 5 minutes.
+```bash
+cd ComfyUI/custom_nodes
+git clone https://github.com/unh1nge/comfyui-character-composer
+```
+
+2. Restart ComfyUI.
+
+3. Add the node:
+   `ComfyUICharacterComposer`
+   Category: `Prompt`
+
+For the fastest setup, load `QWEN AIO CC 3X WORKFLOW.json`. It works for text-to-image when the image inputs are disconnected, and for three-reference image editing when `image1`, `image2`, and `image3` are connected.
+
+<img src="preview/ComfyUI_01645_.png" width="100%" />
 
 ---
 
-# Example Result
+## Usage
+
+1. Start with an optional natural-language base prompt.
+2. Pick a `tag_file`.
+3. Set a `smart_preset` or `composition_mode` if you want the node to bias defaults for you.
+4. Choose `subject_count`, `detail_level`, and `style_strength`.
+5. Leave most dropdowns on `auto` unless you need exact overrides.
+6. Use `fill_auto_traits` when you want the node to complete unresolved traits.
+7. Use `{tags}` inside `input_prompt` if you want explicit wildcard injection.
+8. Check the final prompt preview after each run.
 
 <img src="preview/ComfyUI_01877_.png" width="100%" />
 
 ---
 
-# Included Workflow File
+## JSON Customization
 
-```text
-AIO Comfyui-Character-Composer Qwen Workflow.json
-```
+The node is intentionally data-driven. Most tuning can now happen in JSON.
 
-Recommended pairing:
+### Trait lists
 
-```text
-Qwen-Image-Edit-Rapid-AIO
-```
+The standard visible dropdown values still live in keys such as:
+- `hair_color`
+- `outfit`
+- `interaction`
+- `setting`
+- `prop`
+
+`interaction` will also load from legacy `pose_x` arrays if needed.
+
+### `_composer_rules`
+
+Optional rule block for prompt behavior and scene stability.
+
+Examples:
+- `interaction_scene_families`
+- `scene_compatible_pose_hints`
+- `complexity_level_terms`
+- `extreme_focus_terms`
+- `extreme_camera_terms`
+- `accessory_drop_terms`
+- `setting_drop_terms`
+- `setting_restricted_scenes`
+- `camera_downgrade`
+- `detail_budgets`
+- `category_weights`
+- `complexity_thresholds`
+
+### `_tag_aliases`
+
+Optional synonym mapping for prompt detection without bloating the UI.
+
+Examples:
+- `blond -> blonde`
+- `fur hat -> ushanka fur hat`
+- `snow maiden outfit -> snegurochka costume`
+
+### `_tag_conflicts`
+
+Optional conflict map for incompatible selections.
+
+Examples:
+- `kokoshnik headdress` conflicts with `ushanka fur hat`
+- `cat ears` conflicts with `bunny ears`
+- `winter boots` conflicts with `high heels`
 
 ---
-## Credits / Base Workflow
 
-This project builds upon the excellent work by [Phr00t](https://huggingface.co/Phr00t/Qwen-Image-Edit-Rapid-AIO) and the Qwen Image Edit Rapid AIO ecosystem.
+## Prompt Behavior Notes
 
-The included:
+- Core traits are weighted more strongly than decorative traits.
+- Composition mode can auto-bias camera, focus, scene, and style defaults.
+- Smart presets can override default `detail_level`, `style_strength`, `subject_count`, and composition intent.
+- Complex interaction scenes may automatically drop risky focus, props, accessories, or settings.
+- The complexity guard trims low-priority traits when the prompt becomes too crowded.
 
-`AIO Comfyui-Character-Composer Qwen Workflow.json`
+This is meant to improve stability, not produce perfectly identical prompts for every setup or model.
 
-is a modified and expanded version of Phr00t’s original workflow setup, adapted for structured procedural prompt composition and character-consistent generation workflows.
+---
 
-This repository extends the original workflow with:
-- JSON-driven trait systems
-- deterministic prompt composition
-- smart presets
-- scene conflict handling
-- complexity guards
-- character look preservation
-- unified text-to-image and image-edit workflows
+## Outputs
 
-Recommended base settings from the original Qwen workflow still apply:
-- CFG: `1`
-- Steps: `4`
-- FP8 precision
-- `TextEncodeQwenImageEditPlus`
+- `positive_prompt`
+  - final assembled prompt
 
-Huge respect to Phr00t for pushing the Qwen image-edit ecosystem forward.
+- `negative_prompt`
+  - built-in negative terms
 
-# Additional Preview
+- `image1`
+  - passthrough image input
 
-<img src="preview/ComfyUI_01645_.png" width="100%" />
+- `image2`
+  - second passthrough image input for multi-reference Qwen image-edit workflows
+
+- `image3`
+  - third passthrough image input for multi-reference Qwen image-edit workflows
+
+---
+
+## Included Workflows
+
+This repository includes workflow JSON files adapted from the Qwen ecosystem and adjusted for structured prompt composition.
+ 
+- [QWEN AIO CC 3X WORKFLOW.json](QWEN%20AIO%20CC%203X%20WORKFLOW.json) - recommended all-in-one workflow for `Qwen-Image-Edit-Rapid-AIO` and `ComfyUICharacterComposer`. Leave the composer image inputs disconnected for text-to-image, or connect `image1`, `image2`, and `image3` for three-reference image-to-image.
+
+If you want text-to-image, leave `image1`, `image2`, and `image3` disconnected or bypass the input images in the Qwen workflow.
+
+The included workflows are useful as starting points for:
+- text-to-image
+- character-consistent edits
+
+---
+
+## What This Is Not
+
+- Not a LoRA trainer
+- Not a ControlNet pipeline
+- Not a full workflow engine
+
+This is a prompt composition layer.
+
+---
+
+## Acknowledgements
+
+Built on top of:
+
+Phr00t - Qwen Image Edit ecosystem
+https://huggingface.co/Phr00t/Qwen-Image-Edit-Rapid-AIO
+
+---
+
+## Keywords
+
+ComfyUI, prompt engineering, structured prompts, character generation, Qwen workflow
+
+---
+
+## License
+
+Free to use and modify.
