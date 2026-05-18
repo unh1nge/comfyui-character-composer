@@ -12,8 +12,8 @@ tags:
 - workflow
 - image-generation
 pretty_name: ComfyUI Character Composer
-version: 1.2
-release_date: 2026-04-30
+version: 2.0
+release_date: 2026-5-18
 size_categories:
 - n<1K
 ---
