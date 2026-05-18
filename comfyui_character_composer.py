@@ -128,6 +128,33 @@ def _dedupe_prompt_fragments(prompt: str) -> str:
         norms.append(norm)
     return ", ".join(kept)
 
+
+def _build_subject_anchor(subject_count: str, gender_value: str | None) -> str:
+    count = str(subject_count or "1").lower()
+    if count in {"2", "3", "4"}:
+        if gender_value == "male":
+            noun = "men"
+        elif gender_value == "female":
+            noun = "women"
+        else:
+            noun = "people"
+        return f"{count} {noun}"
+    if count == "group":
+        if gender_value == "male":
+            return "group of men"
+        if gender_value == "female":
+            return "group of women"
+        return "group of people"
+    if gender_value == "male":
+        return "1 man"
+    if gender_value == "female":
+        return "1 woman"
+    return "1 person"
+
+
+def _is_multi_subject_count(subject_count: str) -> bool:
+    return str(subject_count or "1").lower() in {"2", "3", "4", "group"}
+
 # The UI_LAYOUT is the ONLY place where keys are defined. 
 # This tells the script which dropdowns to create.
 UI_LAYOUT = [
@@ -155,6 +182,10 @@ LOOK_KEYS = [
     "fantasy_race",
     "ethnicity",
 ]
+
+# Look keys that define the same character identity, excluding outfit so clothes
+# can still change when preserve_character_look is active.
+PRESERVED_LOOK_KEYS = [k for k in LOOK_KEYS if k != "outfit"]
 
 
 def _randomize_look_traits(final_choices: dict, tag_data: dict, rng: random.Random) -> dict:
@@ -349,7 +380,7 @@ DEFAULT_INTERACTION_SCENE_FAMILIES = {
     "wall": ["wall"],
     "seated": ["spoon", "lap", "seated", "sitting"],
     "dance": ["dance", "dip", "turn"],
-    "kiss": ["kiss", "nuzzl", "cheek", "forehead", "tongue", "lip bite"],
+    "kiss": [ "nuzzl", "cheek", "forehead", "tongue", "lip bite"],
     "embrace": ["hug", "embrace", "cuddl", "waist", "shoulder", "hands", "fingers", "bodies together"],
 }
 
@@ -367,7 +398,7 @@ DEFAULT_EXTREME_CAMERA_TERMS = ["close-up", "overhead", "top-down", "pov"]
 DEFAULT_COMPLEX_INTERACTION_TERMS = ["lifted", "grinding", "dip", "pressing", "spoon", "dance"]
 DEFAULT_COMPLEXITY_LEVEL_TERMS = {
     "high": DEFAULT_COMPLEX_INTERACTION_TERMS,
-    "medium": ["kiss", "embrace", "cuddl", "hug", "waist", "shoulder"],
+    "medium": [ "embrace", "cuddl", "hug", "waist", "shoulder"],
 }
 DEFAULT_ACCESSORY_DROP_TERMS = ["stockings", "garters", "gloves", "headphones", "scarf"]
 DEFAULT_SETTING_DROP_TERMS = ["studio apartment", "indoor set", "balcony"]
@@ -694,12 +725,14 @@ def _resolve_preset_name(preset_value: str | None) -> str | None:
     return preset_value if preset_value in PRESET_TRAITS else None
 
 
-def _apply_smart_preset_preferences(final_choices: dict, tag_data: dict, smart_preset_rules: dict, smart_preset: str, rng: random.Random) -> dict:
+def _apply_smart_preset_preferences(final_choices: dict, tag_data: dict, smart_preset_rules: dict, smart_preset: str, rng: random.Random, preserve_character_look: bool = False) -> dict:
     biased = dict(final_choices)
     preset_rule = smart_preset_rules.get(smart_preset, {})
     preferred_terms = preset_rule.get("preferred_terms", {})
     random_pick_keys = {"outfit", "ethnicity", "hair_color", "hair_style", "accessory"}
     for key, terms in preferred_terms.items():
+        if preserve_character_look and key in PRESERVED_LOOK_KEYS:
+            continue
         if biased.get(key):
             continue
         selected = _select_from_terms(tag_data.get(key, []), terms, rng, random_pick=(key in random_pick_keys))
@@ -720,18 +753,20 @@ def _apply_smart_preset_blocklist(final_choices: dict, smart_preset_rules: dict,
     return sanitized
 
 
-def _apply_mode_biases(final_choices: dict, tag_data: dict, smart_preset_rules: dict, composition_mode: str, smart_preset: str, style_strength: str, subject_count: str, fill_auto_traits: bool, rng: random.Random) -> dict:
+def _apply_mode_biases(final_choices: dict, tag_data: dict, smart_preset_rules: dict, composition_mode: str, smart_preset: str, style_strength: str, subject_count: str, fill_auto_traits: bool, rng: random.Random, preserve_character_look: bool = False) -> dict:
     biased = dict(final_choices)
     mode_defaults = COMPOSITION_MODE_DEFAULTS.get(composition_mode, {})
     for key, value in mode_defaults.items():
+        if preserve_character_look and key in PRESERVED_LOOK_KEYS:
+            continue
         if not biased.get(key):
             preferred_value = _select_preferred_value(tag_data.get(key, []), [value])
             if preferred_value:
                 biased[key] = preferred_value
-    biased = _apply_smart_preset_preferences(biased, tag_data, smart_preset_rules, smart_preset, rng)
+    biased = _apply_smart_preset_preferences(biased, tag_data, smart_preset_rules, smart_preset, rng, preserve_character_look)
 
     if smart_preset == "paired cinematic" and not biased.get("interaction"):
-        preferred_interaction = _select_preferred_value(tag_data.get("interaction", []), ["passionate embrace", "hugging", "kissing"])
+        preferred_interaction = _select_preferred_value(tag_data.get("interaction", []), ["passionate embrace", "hugging"])
         if preferred_interaction:
             biased["interaction"] = preferred_interaction
 
@@ -962,9 +997,10 @@ def _get_smart_preset_rules(tag_file: str = DEFAULT_TAG_FILE) -> dict:
 class ComfyUICharacterComposer:
     DESCRIPTION = "Strict JSON-driven prompt generator for cute & tropical gravure."
     CATEGORY = "Prompt"
-    RETURN_TYPES = ("STRING", "STRING", "STRING", "STRING", "STRING", "STRING", "STRING", "STRING", "IMAGE")
-    RETURN_NAMES = ("positive_prompt", "negative_prompt", "trait_summary", "debug", "why_this_prompt", "dropped_traits", "chaos_score", "stability_hint", "image1")
+    RETURN_TYPES = ("STRING", "STRING", "IMAGE", "IMAGE", "IMAGE")
+    RETURN_NAMES = ("positive_prompt", "negative_prompt", "image1", "image2", "image3")
     FUNCTION = "generate"
+    OUTPUT_NODE = True
 
     @classmethod
     def INPUT_TYPES(cls):
@@ -981,6 +1017,16 @@ class ComfyUICharacterComposer:
         inputs = {
             "required": {
                 "input_prompt": ("STRING", {"default": "", "multiline": True}),
+                "final_prompt_preview": (
+                    "STRING",
+                    {
+                        "default": "Run the node to preview the final prompt here.",
+                        "multiline": True,
+                        "socketless": True,
+                        "tooltip": "Read-only preview of the final prompt from the last run.",
+                        "extra_dict": {"readonly": True},
+                    },
+                ),
                 "seed": ("INT", {"default": 0, "min": 0, "max": 0xffffffffffffffff}),
                 "extra_modifiers": ("STRING", {"default": ", ".join(DEFAULT_MODIFIERS), "advanced": True}),
                 "generation_profile": ("COMBO", {"default": "custom", "options": GENERATION_PROFILE_OPTIONS, "tooltip": "High-level bundled preset for the most common good generation setups."}),
@@ -994,11 +1040,15 @@ class ComfyUICharacterComposer:
                 "randomize_look_keep_position": ("BOOLEAN", {"default": False, "tooltip": "Randomize look traits (subject/body/hair/eyes/outfit/etc.) while keeping pose and composition controls unchanged.", "advanced": True}),
                 "bypass_generator": ("BOOLEAN", {"default": False, "advanced": True}),
                 "preserve_input_position": ("BOOLEAN", {"default": False, "tooltip": "If True and a reference image is supplied, add hints to preserve subject positions and composition from the input image.", "advanced": True}),
-                "preserve_character_look": ("BOOLEAN", {"default": False, "tooltip": "Strict: prevent changing look-related tags (hair_color, hair_style, eye_color, outfit, makeup, body_type, chest_size, fantasy_race, ethnicity) when a reference image is supplied.", "advanced": True}),
+                "preserve_character_look": ("BOOLEAN", {"default": False, "tooltip": "Strict: prevent changing known look-related tags (hair_color, hair_style, eye_color, outfit, makeup, body_type, chest_size, fantasy_race, ethnicity) from UI selections or prompt inference.", "advanced": True}),
                 "outfit_mode": create_combo(["keep"], include_none=False, default="auto"),
                 "tag_file": ("COMBO", {"default": tag_file_default, "options": tags_files or [DEFAULT_TAG_FILE], "tooltip": "Select which tags JSON file to use for generation."}),
             },
-            "optional": { "image1": ("IMAGE", {"image_upload": True}) }
+            "optional": {
+                "image1": ("IMAGE", {"image_upload": True}),
+                "image2": ("IMAGE", {"image_upload": True}),
+                "image3": ("IMAGE", {"image_upload": True}),
+            }
         }
         
         advanced_trait_keys = {
@@ -1020,9 +1070,13 @@ class ComfyUICharacterComposer:
             
         return inputs
 
-    def generate(self, input_prompt, seed, extra_modifiers, generation_profile, smart_preset, composition_mode, subject_count, detail_level, style_strength, fill_auto_traits, randomize_look_keep_position=False, bypass_generator=False, preserve_input_position=False, preserve_character_look=False, outfit_mode="auto", tag_file=DEFAULT_TAG_FILE, image1=None, **kwargs):
+    def generate(self, input_prompt, seed, extra_modifiers, generation_profile, smart_preset, composition_mode, subject_count, detail_level, style_strength, fill_auto_traits, randomize_look_keep_position=False, bypass_generator=False, preserve_input_position=False, preserve_character_look=False, outfit_mode="auto", tag_file=DEFAULT_TAG_FILE, image1=None, image2=None, image3=None, **kwargs):
+        reference_image_count = sum(image is not None for image in (image1, image2, image3))
+        has_reference_image = reference_image_count > 0
         if bypass_generator:
-            return (input_prompt.strip(), NEGATIVE_PROMPT_TERMS, "", "Bypass Active", "Bypass mode returned the raw input prompt.", "", "0", "bypassed", image1)
+            final_prompt = input_prompt.strip()
+            result = (final_prompt, NEGATIVE_PROMPT_TERMS, image1, image2, image3)
+            return {"ui": {"text": (final_prompt,)}, "result": result}
 
         rng = random.Random(seed)
         tag_data = _get_json_tags(tag_file)
@@ -1090,10 +1144,10 @@ class ComfyUICharacterComposer:
         if randomize_look_keep_position:
             final_choices = _randomize_look_traits(final_choices, tag_data, rng)
 
-        # Prepare strict look-preservation if requested and a reference image is supplied.
+        # Prepare strict look-preservation if requested.
         locked_look_values: dict[str, str | None] = {}
         locked_keys: list[str] = []
-        if preserve_character_look and image1 is not None:
+        if preserve_character_look:
             for k in LOOK_KEYS:
                 ui_val = kwargs.get(k, "auto")
                 if ui_val != "auto" and not _is_none_selection(ui_val):
@@ -1143,10 +1197,14 @@ class ComfyUICharacterComposer:
                 subject_count = "2"
             elif re.search(r"\b(group|crowd|many|several|bunch|people)\b", combined):
                 subject_count = "group"
+            elif reference_image_count in (2, 3, 4):
+                subject_count = str(reference_image_count)
+            elif reference_image_count > 4:
+                subject_count = "group"
             else:
                 subject_count = "1"
 
-        final_choices = _apply_mode_biases(final_choices, tag_data, smart_preset_rules, composition_mode, smart_preset, style_strength, subject_count, fill_auto_traits, rng)
+        final_choices = _apply_mode_biases(final_choices, tag_data, smart_preset_rules, composition_mode, smart_preset, style_strength, subject_count, fill_auto_traits, rng, preserve_character_look)
         # Re-apply locked look values so mode biases can't change them. Only
         # reapply keys that were actually locked (have non-None values).
         if locked_keys:
@@ -1181,6 +1239,8 @@ class ComfyUICharacterComposer:
         if fill_auto_traits:
             for key in MASTER_KEYS:
                 if key in locked_keys:
+                    continue
+                if preserve_character_look and key in PRESERVED_LOOK_KEYS:
                     continue
                 if kwargs.get(key, "auto") == "auto" and not final_choices.get(key):
                     final_choices[key] = _pick_random_choice(rng, tag_data.get(key, []))
@@ -1229,7 +1289,7 @@ class ComfyUICharacterComposer:
         # try to inject a model hint. If the user included the placeholder
         # `{preserve_position}` in their prompt, replace it; otherwise defer
         # appending to the modifiers section so it's prominent.
-        if preserve_input_position and image1 is not None:
+        if preserve_input_position and has_reference_image:
             if "{preserve_position}" in user_text:
                 user_text = user_text.replace("{preserve_position}", preserve_hint_text)
                 used.add("preserve_input_position")
@@ -1248,23 +1308,9 @@ class ComfyUICharacterComposer:
             if k not in used and final_choices.get(k)
         ]
         gender_value = final_choices.get("gender") if "gender" not in used else None
-        if subject_count == "2":
-            if gender_value == "male":
-                subject_anchor = "2 men"
-            elif gender_value == "female":
-                subject_anchor = "2 women"
-            else:
-                subject_anchor = "2 people"
-        elif subject_count == "group":
-            subject_anchor = "group of people"
-        elif gender_value == "male":
-            subject_anchor = "1 man"
-        elif gender_value == "female":
-            subject_anchor = "1 woman"
-        else:
-            subject_anchor = "1 person"
+        subject_anchor = _build_subject_anchor(subject_count, gender_value)
         if not subject_traits and not gender_value:
-            subject_traits.append("model")
+            subject_traits.append("models" if _is_multi_subject_count(subject_count) else "model")
 
         hair_color = final_choices.get("hair_color") if "hair_color" not in used else None
         hair_style = final_choices.get("hair_style") if "hair_style" not in used else None
@@ -1333,7 +1379,7 @@ class ComfyUICharacterComposer:
 
         if interaction:
             pose_details.append(_weight_text(f"interaction: {interaction}", composer_rules["category_weights"].get("interaction", 1.0)))
-            if pose and any(term in interaction.lower() for term in ["kiss", "partner", "threesome", "hug", "embrace", "grinding", "spoon"]):
+            if pose and any(term in interaction.lower() for term in [ "partner", "threesome", "hug", "embrace", "grinding", "spoon"]):
                 pose = None
         if pose:
             pose_details.append(_weight_text(f"body pose: {pose}", composer_rules["category_weights"].get("pose", 1.0)))
@@ -1398,39 +1444,8 @@ class ComfyUICharacterComposer:
         final_prompt = re.sub(r",\s*,", ",", final_prompt).strip(" ,")
         final_prompt = _dedupe_prompt_fragments(final_prompt)
 
-        if chaos_score_value <= 6:
-            stability_hint = "low risk"
-        elif chaos_score_value <= 10:
-            stability_hint = "medium risk"
-        else:
-            stability_hint = "high risk"
-        
-        locked_look_summary = ",".join([f"{k}={locked_look_values.get(k)}" for k in locked_keys]) if locked_keys else "none"
-        why_this_prompt = ", ".join(
-            [
-                f"generation_profile={generation_profile}",
-                f"randomize_look_keep_position={bool(randomize_look_keep_position)}",
-                f"preserve_input_position={bool(preserve_input_position)}",
-                f"preserve_character_look={bool(preserve_character_look)}",
-                f"locked_look={locked_look_summary}",
-                f"smart_preset={smart_preset}",
-                f"composition_mode={composition_mode}",
-                f"subject_count={subject_count}",
-                f"detail_level={detail_level}",
-                f"style_strength={style_strength}",
-                f"scene_family={scene_meta['scene_family'] or 'none'}",
-                f"interaction_complexity={scene_meta['interaction_complexity']}",
-            ]
-        )
-        trait_summary = ", ".join(
-            [f"generation_profile: {generation_profile}", f"detail_level: {detail_level}", f"style_strength: {style_strength}", f"subject_count: {subject_count}"] + [f"{k}: {v}" for k, v in final_choices.items() if v]
-        )
-        debug_str = " | ".join(
-            [f"generation_profile={generation_profile}", f"detail_level={detail_level}", f"style_strength={style_strength}", f"subject_count={subject_count}", f"chaos_score={chaos_score_value}", f"stability_hint={stability_hint}"] + [f"{k}={v}" for k, v in final_choices.items() if v]
-        )
-        dropped_traits_str = "; ".join(dropped_traits) if dropped_traits else "none"
-        
-        return (final_prompt, NEGATIVE_PROMPT_TERMS, trait_summary, debug_str, why_this_prompt, dropped_traits_str, str(chaos_score_value), stability_hint, image1)
+        result = (final_prompt, NEGATIVE_PROMPT_TERMS, image1, image2, image3)
+        return {"ui": {"text": (final_prompt,)}, "result": result}
 
 NODE_CLASS_MAPPINGS = {
     "ComfyUICharacterComposer": ComfyUICharacterComposer,
